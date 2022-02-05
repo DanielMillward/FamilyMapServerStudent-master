@@ -1,4 +1,7 @@
 package MyExceptions;
 
-public class UsernameTakenException {
+/**
+ * Thrown if given username for registering is already taken
+ */
+public class UsernameTakenException extends Exception {
 }

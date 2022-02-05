@@ -1,14 +1,49 @@
 package Models;
 
+/**
+ * User Object for a user of the FamilyMap service. Corresponds to a row in the User table.
+ */
 public class User {
+    /**
+     *Unique username for user
+     */
     private String username;
+    /**
+     *User’s password
+     */
     private String password;
+    /**
+     *User’s email address
+     */
     private String email;
+    /**
+     *User’s first name
+     */
     private String firstName;
+    /**
+     *User’s last name
+     */
     private String lastName;
+    /**
+     *User’s gender
+     */
     private String gender;
+    /**
+     *Unique Person ID assigned to this user’s generated Person
+     */
     private String personID;
 
+    /**
+     * Generates a User Object given the necessary information
+     *
+     * @param username Unique username for user
+     * @param password User’s password
+     * @param email User’s email address
+     * @param firstName User’s first name
+     * @param lastName User’s last name
+     * @param gender User’s gender
+     * @param personID Unique Person ID assigned to this user’s generated Person
+     */
     public User(String username, String password, String email, String firstName, String lastName, String gender, String personID) {
         this.username = username;
         this.password = password;

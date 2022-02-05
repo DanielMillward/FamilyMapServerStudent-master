@@ -1,17 +1,27 @@
 package RequestResult;
 
+/**
+ * Stores the data for an HTTP request to make the family tree of a given user
+ */
 public class FillRequest {
+    /**
+     * username of the user who we want to fill the family tree of
+     */
     private String username;
+    /**
+     * number of generations we want to fill up with data
+     */
     private int numGens;
 
+    /**
+     * Creates a FillRequest object
+     *
+     * @param username username of the user who we want to fill the family tree of
+     * @param numGens number of generations we want to fill up with data
+     */
     public FillRequest(String username, int numGens) {
         this.username = username;
         this.numGens = numGens;
-    }
-
-    public FillRequest(String username) {
-        this.username = username;
-        numGens = 4;
     }
 
     public String getUsername() {

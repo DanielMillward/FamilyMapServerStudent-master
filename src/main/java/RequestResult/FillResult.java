@@ -1,10 +1,25 @@
 package RequestResult;
 
+/**
+ * Data for an HTTP response as for how the filing of a user's tree went
+ */
 public class FillResult {
+    /**
+     * Whether the data filling was successful
+     */
     private boolean success;
+    /**
+     * Information on the success of the data filling
+     */
     private String message;
 
 
+    /**
+     *
+     *
+     * @param message
+     * @param success
+     */
     public FillResult(String message, Boolean success){
         this.message = message;
         this.success = success;

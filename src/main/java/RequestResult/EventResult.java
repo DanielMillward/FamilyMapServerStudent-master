@@ -1,18 +1,68 @@
 package RequestResult;
 
+/**
+ * Stores the data for an HTTP result with all the event data for the requested single event.
+ */
 public class EventResult {
+    /**
+     *Username of user to which this event belongs
+     */
     private String associatedUsername;
+    /**
+     *Unique identifier for this event
+     */
     private String eventID;
+    /**
+     *ID of person to which this event belongs
+     */
     private String personID;
+    /**
+     *
+     * Country in which event occurred
+     */
     private String country;
+    /**
+     *City in which event occurred
+     */
     private String city;
+    /**
+     *Type of event
+     */
     private String eventType;
+    /**
+     *Latitude of event’s location
+     */
     private float latitude;
+    /**
+     *Longitude of event’s location
+     */
     private float longitude;
+    /**
+     *Year in which event occurred
+     */
     private int year;
+    /**
+     * Whether the data access was successful
+     */
     private boolean success;
+    /**
+     * Message relating to the success/failure of the data access
+     */
     private String message;
 
+    /**
+     * Generate an EventResult object for a given retrieved event
+     *
+     * @param eventID  unique ID for the given event
+     * @param associatedUsername name of the user whose person the events relates to corresponds to
+     * @param personID ID for the person the event relates to
+     * @param latitude Latitude coordinate of the event
+     * @param longitude Longitude coordinate of the event
+     * @param country Country location of the event
+     * @param city City location of the event
+     * @param eventType Type of event (e.g. birth, death, marriage)
+     * @param year Year the event took place
+     */
     public EventResult(String associatedUsername, String eventID, String personID, String country, String city, String eventType, float latitude, float longitude, int year, boolean success) {
         this.associatedUsername = associatedUsername;
         this.eventID = eventID;
