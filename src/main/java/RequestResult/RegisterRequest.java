@@ -1,13 +1,50 @@
 package RequestResult;
 
+/**
+ * Stores the data for an HTTP request to register a new user
+ */
 public class RegisterRequest {
+    /**
+     *Unique username for user
+     */
     private String username;
+    /**
+     *
+     *
+     * User’s password
+     */
     private String password;
+    /**
+     *
+     *
+     * User’s email address
+     */
     private String email;
+    /**
+     *User’s first name
+     */
     private String firstName;
+    /**
+     *
+     *
+     * User’s last name
+     */
     private String lastName;
+    /**
+     *gender
+     */
     private String gender;
 
+    /**
+     * Generates a RegisterRequest object
+     *
+     * @param username  Unique username for user
+     * @param password User’s password
+     * @param email User’s email address
+     * @param firstName User’s first name
+     * @param lastName User’s last name
+     * @param gender User’s gender
+     */
     public RegisterRequest(String username, String password, String email,
                            String firstName, String lastName, String gender) {
         this.username = username;

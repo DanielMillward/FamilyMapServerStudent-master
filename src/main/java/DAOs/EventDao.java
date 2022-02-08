@@ -9,6 +9,7 @@ import java.sql.SQLException;
  * Provides access to Event-object related queries to the SQLite database.
  */
 public class EventDao {
+//TODO: Add constructor stuff and dataaccessexception
 
     /**
      *

@@ -15,10 +15,10 @@ public class FillResult {
 
 
     /**
+     * Generates a FillResult object
      *
-     *
-     * @param message
-     * @param success
+     * @param message  Information on the success of the data filling
+     * @param success Whether the data filling was successful
      */
     public FillResult(String message, Boolean success){
         this.message = message;

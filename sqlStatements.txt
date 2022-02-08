@@ -1,0 +1,37 @@
+create table User(
+username TEXT not null UNIQUE,
+password TEXT not null,
+email TEXT not null,
+firstName TEXT not null,
+lastName TEXT not null,
+gender TEXT CHECK( gender IN ('f', 'm')) not null,
+personID TEXT not null
+);
+
+create table Person(
+personID TEXT not null UNIQUE,
+associatedUsername TEXT not null REFERENCES User(username),
+firstName TEXT not null,
+lastName TEXT not null,
+gender TEXT CHECK( gender IN ('f', 'm')),
+fatherID TEXT,
+motherID TEXT,
+spouseID TEXT
+);
+
+create table Event(
+eventID TEXT not null UNIQUE,
+associatedUsername TEXT not null REFERENCES User(username),
+personID TEXT not null REFERENCES Person(personID),
+latitude REAL not null,
+longitutde REAL not null,
+country TEXT not null,
+city TEXT not null,
+eventType TEXT not null,
+year INTEGER not null
+);
+
+create table Authtoken(
+authtoken TEXT not null UNIQUE,
+username TEXT not null REFERENCES User(username)
+);
