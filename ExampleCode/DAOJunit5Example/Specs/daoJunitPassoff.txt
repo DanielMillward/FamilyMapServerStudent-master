@@ -1,0 +1,45 @@
+Instructions
+
+Test cases for the Data Access and Service classes
+Each public method in these classes should have two corresponding test cases,
+one positive test and one negative test (see project specs for more details on test cases).
+Every test case should include an Assert statement of some type.
+
+
+Before starting anything, please read the specifications for the server carefully and thoroughly.
+For this assignment, you will implement two DAO classes that each contain 3 methods, and then
+implement test cases for each method as described below.
+
+
+
+DAO classes
+
+    The 2 DAO classes you will show to the TA for pass-off are the UserDAO class and the PersonDAO class.
+    The 3 methods you will implement inside each DAO class will handle inserting new data into the table,
+    retrieving information from a table, and clearing all information from the table.
+
+
+
+Junit Test Cases
+
+    For your test cases, create a positive and a negative test case for the insertion and retrieval
+    methods of each DAO class and a single positive test case for the clear method of each DAO class.
+    This means we are looking for a minimum of 10 good quality test cases, 5 for each of the 2 DAO classes.
+    For a positive test case, we want the test case to try using a DAO class method where the SQL
+    operation works successfully. For a negative test case, we want the test case to try using a
+    DAO class method where the SQL operation does not work successfully and check to see that the
+    method handles the problem correctly.
+
+Pass-off
+
+    You will passoff with a TA (either in person or over Zoom). When you do so, you will be asked
+    to present 2 DAO classes with 3 operations in each DAO class (Note: This does not mean that
+    your DAO classes will only have 3 operations in them when you are implementing the full Family
+     Map Server).
+    When you contact the TAs for passoff, have your code either pulled up on a laptop or a lab machine
+     ready to show the TA (1) Your 2 DAO classes and (2) The 10 Junit test cases. Once the TA has
+     reviewed your DAO’s and your test cases, you will be asked to run your test cases and show that
+     they all pass. There is no partial credit for this assignment.
+    When we are passing you off we are looking to see that you understand how to connect to your
+    database using DAO classes, perform SQL operations on your database with the DAO classes, and
+     write test cases to test the functionality of your DAO classes.
