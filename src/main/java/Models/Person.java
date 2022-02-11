@@ -1,5 +1,7 @@
 package Models;
 
+import java.util.Objects;
+
 /**
  * Person Object for a family member of a user. Corresponds to a row in the Person table.
  */
@@ -122,5 +124,24 @@ public class Person {
 
     public void setSpouseID(String spouseID) {
         this.spouseID = spouseID;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null)
+            return false;
+        if (o instanceof Person) {
+            Person oPerson = (Person) o;
+            return oPerson.getPersonID().equals(getPersonID()) &&
+                    oPerson.getAssociatedUsername().equals(getAssociatedUsername()) &&
+                    oPerson.getFirstName().equals(getFirstName()) &&
+                    Objects.equals(oPerson.getLastName(), getLastName()) &&
+                    Objects.equals(oPerson.getGender(), getGender()) &&
+                    oPerson.getFatherID().equals(getFatherID()) &&
+                    oPerson.getMotherID().equals(getMotherID()) &&
+                    oPerson.getSpouseID().equals(getSpouseID());
+        } else {
+            return false;
+        }
     }
 }

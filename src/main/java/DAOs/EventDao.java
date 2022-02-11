@@ -106,7 +106,6 @@ public class EventDao {
                 rs = stmt.executeQuery();
                 if (rs.next()) {
                     currUser = rs.getString("username");
-                    return events;
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -119,7 +118,6 @@ public class EventDao {
                         e.printStackTrace();
                     }
                 }
-
             }
             //2. Get all the events for the user
             rs = null;
@@ -127,13 +125,13 @@ public class EventDao {
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
                 stmt.setString(1, currUser);
                 rs = stmt.executeQuery();
-                if (rs.next()) {
+                while (rs.next()) {
                     events.add(new Event(rs.getString("eventID"), rs.getString("associatedUsername"),
                             rs.getString("personID"), rs.getFloat("latitude"), rs.getFloat("longitude"),
                             rs.getString("country"), rs.getString("city"), rs.getString("eventType"),
                             rs.getInt("year")));
-                    return events;
                 }
+                return events;
             } catch (SQLException e) {
                 e.printStackTrace();
                 throw new DataAccessException("Error encountered while finding event");

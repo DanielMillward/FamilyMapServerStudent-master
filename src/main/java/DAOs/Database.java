@@ -10,7 +10,7 @@ import java.sql.Statement;
 
 public class Database {
     private Connection conn;
-
+    // To do this right: https://www.sqlitetutorial.net/sqlite-java/sqlite-jdbc-driver/
     // a connection is basically a transaction? Which is a buffer before inserting into/changing the db.
 
 
