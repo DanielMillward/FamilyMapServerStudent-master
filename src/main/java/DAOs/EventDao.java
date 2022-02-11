@@ -131,7 +131,11 @@ public class EventDao {
                             rs.getString("country"), rs.getString("city"), rs.getString("eventType"),
                             rs.getInt("year")));
                 }
-                return events;
+                if (!events.isEmpty()) {
+                    return events;
+                } else {
+                    return null;
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
                 throw new DataAccessException("Error encountered while finding event");

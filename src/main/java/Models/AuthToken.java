@@ -40,4 +40,17 @@ public class AuthToken {
     public void setUsername(String username) {
         this.username = username;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null)
+            return false;
+        if (o instanceof AuthToken) {
+            AuthToken oEvent = (AuthToken) o;
+            return oEvent.getAuthtoken().equals(getAuthtoken()) &&
+                    oEvent.getUsername().equals(getUsername());
+        } else {
+            return false;
+        }
+    }
 }

@@ -32,7 +32,7 @@ public class EventDaoTest {
         Connection conn = db.getConnection();
         //Let's clear the database as well so any lingering data doesn't affect our tests
 
-        db.clearTables();
+        db.clearEventTable();
         //Then we pass that connection to the EventDAO so it can access the database
         eDao = new EventDao(conn);
     }

@@ -3,10 +3,7 @@ package DAOs;
 import MyExceptions.DataAccessException;
 
 import java.io.File;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class Database {
     private Connection conn;
@@ -69,11 +66,20 @@ public class Database {
         }
     }
 
-    public void clearTables() throws DataAccessException
+    public void clearEventTable() throws DataAccessException
     {
-
         try (Statement stmt = conn.createStatement()){
             String sql = "DELETE FROM Events";
+            stmt.executeUpdate(sql);
+        } catch (SQLException e) {
+            throw new DataAccessException("SQL Error encountered while clearing tables");
+        }
+    }
+
+    public void clearPersonTable() throws DataAccessException
+    {
+        try (Statement stmt = conn.createStatement()){
+            String sql = "DELETE FROM Person";
             stmt.executeUpdate(sql);
         } catch (SQLException e) {
             throw new DataAccessException("SQL Error encountered while clearing tables");

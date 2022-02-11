@@ -58,6 +58,8 @@ public class PersonDao {
 
     /**
      * Gets either all or just one of the people associated with a given user.
+     * If want all persons and there's none, returns empty arraylist.
+     * If want one person and there's none, returns null.
      * @param authToken Current user's authentication token
      * @param personID ID of requested person. If not null, returns just that person.
      * @return array of Persons corresponding to the user if personID is null, else just array of one.
@@ -127,7 +129,11 @@ public class PersonDao {
                             rs.getString("firstName"), rs.getString("lastName"), rs.getString("gender"),
                             rs.getString("fatherID"), rs.getString("motherID"), rs.getString("spouseID")));
                 }
-                return persons;
+                if (!persons.isEmpty()) {
+                    return persons;
+                } else {
+                    return null;
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
                 throw new DataAccessException("Error encountered while finding event");

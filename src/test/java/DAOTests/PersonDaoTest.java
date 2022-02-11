@@ -1,6 +1,8 @@
 package DAOTests;
 
+import DAOs.AuthTokenDao;
 import DAOs.PersonDao;
+import Models.AuthToken;
 import Models.Person;
 import MyExceptions.DataAccessException;
 import DAOs.Database;
@@ -11,6 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,6 +22,7 @@ public class PersonDaoTest {
     private Database db;
     private Person bestPerson;
     private PersonDao pDao;
+    private AuthTokenDao aDao;
 
     @BeforeEach
     public void setUp() throws DataAccessException
@@ -33,9 +37,11 @@ public class PersonDaoTest {
         Connection conn = db.getConnection();
         //Let's clear the database as well so any lingering data doesn't affect our tests
 
-        db.clearTables();
+        db.clearPersonTable();
         //Then we pass that connection to the EventDAO so it can access the database
         pDao = new PersonDao(conn);
+        //Does having multiple DAOs with the same connection work????
+        aDao = new AuthTokenDao(conn);
     }
 
     @AfterEach
@@ -73,5 +79,57 @@ public class PersonDaoTest {
         //of this class. All you need to know is that this line of code runs the code that
         //comes after the "()->" and expects it to throw an instance of the class in the first parameter.
         assertThrows(DataAccessException.class, ()-> pDao.insert(bestPerson));
+    }
+
+    @Test
+    public void retrievalPass() throws DataAccessException {
+        //add something to database
+        pDao.insert(bestPerson);
+
+        //check if retrieval matches for one case with different authtokens maybe
+        Person compareTest = pDao.getPersons(null, bestPerson.getPersonID()).get(0);
+        Person compareTest2 = pDao.getPersons("this param shouldnt matter", bestPerson.getPersonID()).get(0);
+        assertNotNull(compareTest);
+        assertNotNull(compareTest2);
+        assertEquals(bestPerson, compareTest);
+        assertEquals(bestPerson, compareTest2);
+
+        //add an authtoken to the authtoken database
+        aDao.addAuthToken(new AuthToken("myToken", "Storm"));
+
+        //array of both of Storm's people
+        ArrayList<Person> userStormList = new ArrayList<>();
+        Person secondBestPerson = new Person("Person_number_2", "Storm", "Elon",
+                "Musk", "f", "dad_12", "mom_34","spouse_78");
+        userStormList.add(bestPerson);
+        userStormList.add(secondBestPerson);
+
+        //check if retrieving everything works too
+        pDao.insert(secondBestPerson);
+        ArrayList<Person> getAllPersons = pDao.getPersons("myToken", null);
+        assertNotNull(getAllPersons);
+        assertEquals(getAllPersons, userStormList);
+    }
+
+    @Test
+    public void retrievalFail() throws DataAccessException {
+        //try to get something after inserting nothing beforehand
+        assertNull(pDao.getPersons(null, bestPerson.getPersonID()));
+        //try to get something after giving a wrong personID
+        pDao.insert(bestPerson);
+        assertNull(pDao.getPersons(null, "Not_a_valid_id"));
+        //try to get something after giving wrong authtoken
+        aDao.addAuthToken(new AuthToken("myToken", "Storm"));
+        assertNull(pDao.getPersons("invalid_authToken", null));
+    }
+
+    @Test
+    public void clearPass() throws DataAccessException {
+        //clear the person table
+        pDao.insert(bestPerson);
+        db.clearPersonTable();
+        //try to access something (should be empty)
+        ArrayList<Person> compareTest = pDao.getPersons("MyToken", null);
+        assertNull(compareTest);
     }
 }
