@@ -5,10 +5,7 @@ import Models.Person;
 import MyExceptions.DataAccessException;
 import MyExceptions.InvalidAuthTokenException;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 /**
@@ -51,7 +48,6 @@ public class PersonDao {
 
             stmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("person SQL error " + e.getMessage());
             throw new DataAccessException("Error encountered while inserting into the database");
         }
     }
@@ -151,5 +147,13 @@ public class PersonDao {
         return null;
     }
 
+    public void clearPersons() throws DataAccessException{
+        try (Statement stmt = conn.createStatement()){
+            String sql = "DELETE FROM Person";
+            stmt.executeUpdate(sql);
+        } catch (SQLException e) {
+            throw new DataAccessException("SQL Error encountered while clearing tables");
+        }
+    }
 
 }

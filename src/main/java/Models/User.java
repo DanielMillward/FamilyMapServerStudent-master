@@ -1,5 +1,7 @@
 package Models;
 
+import java.util.Objects;
+
 /**
  * User Object for a user of the FamilyMap service. Corresponds to a row in the User table.
  */
@@ -108,5 +110,23 @@ public class User {
 
     public void setPersonID(String personID) {
         this.personID = personID;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null)
+            return false;
+        if (o instanceof User) {
+            User oPerson = (User) o;
+            return oPerson.getUsername().equals(getUsername()) &&
+                    oPerson.getPassword().equals(getPassword()) &&
+                    oPerson.getEmail().equals(getEmail()) &&
+                    oPerson.getFirstName().equals(getFirstName()) &&
+                    oPerson.getLastName().equals(getLastName()) &&
+                    oPerson.getGender().equals(getGender()) &&
+                    oPerson.getPersonID().equals(getPersonID());
+        } else {
+            return false;
+        }
     }
 }

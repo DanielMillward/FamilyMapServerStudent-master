@@ -127,7 +127,7 @@ public class PersonDaoTest {
     public void clearPass() throws DataAccessException {
         //clear the person table
         pDao.insert(bestPerson);
-        db.clearPersonTable();
+        pDao.clearPersons();
         //try to access something (should be empty)
         ArrayList<Person> compareTest = pDao.getPersons("MyToken", null);
         assertNull(compareTest);

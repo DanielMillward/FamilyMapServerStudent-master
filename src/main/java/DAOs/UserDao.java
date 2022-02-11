@@ -1,9 +1,12 @@
 package DAOs;
 
+import Models.Person;
 import Models.User;
+import MyExceptions.DataAccessException;
 import MyExceptions.InvalidInputException;
 
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 
 /**
  * Provides access to user related queries to the database, such as retrieving and creating users
@@ -16,34 +19,90 @@ public class UserDao {
     // see: https://www.oracle.com/java/technologies/data-access-object.html
 
     /**
+     * Connection to the database
+     */
+    private final Connection conn;
+    /**
+     * @param conn Generates an event DAO object with a connection to the database
+     */
+    public UserDao(Connection conn)
+    {
+        this.conn = conn;
+    }
+
+    /**
      * Gets the user associated with a given username and password
      *
      * @param username the username of a user
      * @param password the corresponding password of the user
      * @return User object with given username/password
-     * @throws InvalidInputException Missing or invalid username/password
-     * @throws SQLException if encounters an error in adding it to the table
+     * @throws DataAccessException if it encounters an error retrieving the user.
      */
-    User getUser(String username, String password) throws InvalidInputException, SQLException {
+    public User getUser(String username, String password) throws DataAccessException {
+        User currUser;
+        ResultSet rs = null;
+        String sql = "SELECT * FROM User WHERE username = ? AND password = ?;";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                currUser = new User(rs.getString("username"),
+                        rs.getString("password"), rs.getString("email"),
+                        rs.getString("firstName"), rs.getString("lastName"),
+                        rs.getString("gender"), rs.getString("personID"));
+                return currUser;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DataAccessException("Error encountered while finding event");
+        } finally {
+            if(rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
         return null;
     }
 
     /**
      * Adds a user to the database given all the information required
      *
-     * @param username username of the new user
-     * @param password password of the new user
-     * @param email email of the new user
-     * @param firstName first name of the new user
-     * @param lastName last name of the new user
-     * @param gender gender of the new user
+     * @param user User object with all the data required to make a new user
      * @return the brand new User object added to the database
-     * @throws InvalidInputException Missing or invalid parameters
-     * @throws SQLException if encounters an error in adding it to the table
+     * @throws DataAccessException if it encounters an error in adding the user to the database
      */
-    User createUser(String username, String password, String email, String firstName,
-                    String lastName, String gender) throws InvalidInputException, SQLException {
+    public User insertUser(User user) throws DataAccessException {
+        String sql = "INSERT INTO User (username, password, email, firstName, lastName, gender, personID) VALUES(?,?,?,?,?,?,?)";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            //Using the statements built-in set(type) functions we can pick the question mark we want
+            //to fill in and give it a proper value. The first argument corresponds to the first
+            //question mark found in our sql String
+            stmt.setString(1, user.getUsername());
+            stmt.setString(2, user.getPassword());
+            stmt.setString(3, user.getEmail());
+            stmt.setString(4, user.getFirstName());
+            stmt.setString(5, user.getLastName());
+            stmt.setString(6, user.getGender());
+            stmt.setString(7, user.getPersonID());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new DataAccessException("Error encountered while inserting into the database");
+        }
         return null;
+    }
+
+    public void clearUsers() throws DataAccessException{
+        try (Statement stmt = conn.createStatement()){
+            String sql = "DELETE FROM User";
+            stmt.executeUpdate(sql);
+        } catch (SQLException e) {
+            throw new DataAccessException("SQL Error encountered while clearing tables");
+        }
     }
 
     /**
