@@ -108,7 +108,7 @@ public class PersonDaoTest {
         pDao.insert(secondBestPerson);
         ArrayList<Person> getAllPersons = pDao.getPersons("myToken", null);
         assertNotNull(getAllPersons);
-        assertEquals(getAllPersons, userStormList);
+        assertEquals(userStormList, getAllPersons);
     }
 
     @Test

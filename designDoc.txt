@@ -1,0 +1,57 @@
+Server class extends HttpServer
+- deal with bind, start/stop, executor, context
+- Looks at the incoming request (how?) and depending on what it is, calls the function of the
+appropriate handler class, and returns the result of the handler class
+- makes, not implements, httpserver
+
+https://drive.google.com/drive/folders/1UTxyfAp2rXm7AbiffPJ3rOS6UaPUGj8B
+
+Handler class
+- implements handler class
+
+Steps:
+0. Write super rough **register** (?) handler and service classes, copy examples
+    - add gson to maven (slide 9)
+    - split ClaimHandler class in drive link into handler and service classes
+    - handler, slide 4 - https://byu.app.box.com/s/aw4ivqkwswa2blcm46sqrckng9psiul4
+    - service, slide 5 - https://byu.app.box.com/s/aw4ivqkwswa2blcm46sqrckng9psiul4
+1. Make a test class for the server, to make sure connections work
+    - Client file in drive link, basically copy/adapt for testing
+    - Make that thing work for the rough class in step 0
+    - make list of test functions to write
+    - start writing more thorough for rough class in step 0
+    - make sure that works (doesn't have to pass, just working in general)
+    - write for all the other classes
+2. Figure out what can be put into a interface(s)/parents/helpers handler class, or should use interface
+    - sending a fail message for a bad type (get vs post)
+    -
+3. Write the parent handler class
+4. Figure out what methods should be in interface(s)/parents/helpers for service classes
+    - fill/register making tree logic
+5. write the interface(s) class(es)
+    - fill/register logic, slide 14: https://byu.app.box.com/s/aw4ivqkwswa2blcm46sqrckng9psiul4
+6. Write the actual handlers/services one action set at a time
+
+
+
+
+To actually do in handler class:
+1. Get HTTP request type, make sure its type correct, if not return bad request and close
+    - bad request sending is part of parent
+2. convert everything into the right request object type
+3. call the function of the respective service and get its result object back
+4. decode object into json
+5. depending on result, return desired status code and json data body.
+
+To do in service classes:
+1. Make sure that all the parameters are present, if not, return a fail result object
+2. make sure all parameters are within tolerance? if not, return a fail result object
+3. run given request on server using DAO object
+4. depending on null-ness, Convert it into the desired type of result object
+
+Questions:
+- How does a proxy connect to the server (as in passoff thing)?
+        - Just sets up a connection to the running server? So run target -> classes -> Server.main,
+        then run your test code? idk
+
+- How do you set up a test for network things with the test bit?
