@@ -64,29 +64,19 @@ public class LoginTest {
     @Test
     public void loginPass() throws DataAccessException, IOException {
 
-        // make URL to access login
+        // make URL and open an HTTP connection
         URL url = new URL(baseUrlString + "/user/login");
-
-        // Start constructing our HTTP request
         HttpURLConnection http = (HttpURLConnection) url.openConnection();
 
         // Specify that we are sending an HTTP POST request in JSON
         http.setRequestMethod("POST");
         http.setRequestProperty("Content-Type", "application/json; utf-8");
-
-        // Indicate that this request will indeed contain an HTTP request body
-        http.setDoOutput(true);
-
+        http.setDoOutput(true); // will have a response body
+        http.addRequestProperty("Accept", "application/json"); // want a JSON response
         // Add an auth token to the request in the HTTP "Authorization" header
         //http.addRequestProperty("Authorization", "afj232hj2332");
 
-        // Specify that we would like to receive the server's response in JSON
-        // format by putting an HTTP "Accept" header on the request (this is not
-        // necessary because our server only returns JSON responses, but it
-        // provides one more example of how to add a header to an HTTP request).
-        http.addRequestProperty("Accept", "application/json");
-
-        //add the login request
+        //add the login request to the output stream of the httpurlconnection
         String jsonInputString = "{\"username\": \""+ bestUser.getUsername() +
                 "\", \"password\": \""+ bestUser.getPassword() + "\"}";
         try(OutputStream os = http.getOutputStream()) {
@@ -97,16 +87,21 @@ public class LoginTest {
         // Connect to the server and send the HTTP request
         http.connect();
 
-        // By the time we get here, the HTTP response has been received from the server.
-        // Check to make sure that the HTTP response from the server contains a 200
-        // status code, which means "success".  Treat anything else as a failure.
+        // make sure we get an OK response
         assertEquals(http.getResponseCode(), HttpURLConnection.HTTP_OK);
-
         InputStream respBody = http.getInputStream();
-        String respData = readString(respBody);
-        System.out.println(respData);
+        String respData = readString(respBody); // read the response body
+        System.out.println(respData); // print it out
+        //assert start with everything before the authToken
+        String startJSON = "{\"username\":\"ElonMuskratty\",\"authtoken\":";
+        String endJSON = ",\"personID\":\"elon1234\",\"success\":true}";
+        assertTrue(respData.startsWith(startJSON));
+        //asert end with everything after the authToken
+        assertTrue(respData.endsWith(endJSON));
         // make sure the json output matches here!
     }
+
+
 
     private String readString(InputStream is) throws IOException {
         StringBuilder sb = new StringBuilder();

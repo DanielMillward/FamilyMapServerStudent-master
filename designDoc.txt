@@ -16,15 +16,14 @@ Steps:
     - handler, slide 4 - https://byu.app.box.com/s/aw4ivqkwswa2blcm46sqrckng9psiul4
     - service, slide 5 - https://byu.app.box.com/s/aw4ivqkwswa2blcm46sqrckng9psiul4
 1. Make a test class for the server, to make sure connections work
-    - Client file in drive link, basically copy/adapt for testing
+    - Client file in drive link, basically copy/adapt for testing (SKIPPED)
     - Make that thing work for the rough class in step 0
     - make list of test functions to write
     - start writing more thorough for rough class in step 0
     - make sure that works (doesn't have to pass, just working in general)
     - write for all the other classes
 2. Figure out what can be put into a interface(s)/parents/helpers handler class, or should use interface
-    - sending a fail message for a bad type (get vs post)
-    -
+    - TODO: put the start/end bits not in switch in their own functions?
 3. Write the parent handler class
 4. Figure out what methods should be in interface(s)/parents/helpers for service classes
     - fill/register making tree logic

@@ -27,7 +27,7 @@ public class LoginService {
      * @param r Information about the user to login in the form of a LoginRequest
      * @return The result of the operation in the form of a LoginResult
      */
-    public LoginResult login(LoginRequest r) {
+    public LoginResult login(LoginRequest r){
         Database db= new Database();
         try {
             // Checks if request has nonnull username and password

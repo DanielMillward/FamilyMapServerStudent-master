@@ -17,15 +17,15 @@ public class LoginResult {
      * personID of the person object of the user that logged in
      */
     private String personID;
-    /**
-     * whether the login was successful
-     */
-    private boolean success;
+
     /**
      * info on whether the login was successful
      */
     private String message;
-
+    /**
+     * whether the login was successful
+     */
+    private boolean success;
     /**
      *  Generates a LoginResult object of a successful login
      *
