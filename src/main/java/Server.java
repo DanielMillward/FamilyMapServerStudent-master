@@ -1,5 +1,6 @@
 import java.io.*;
 import java.net.*;
+import java.util.logging.Logger;
 
 import Handlers.*;
 import com.sun.net.httpserver.*;
@@ -8,7 +9,6 @@ import com.sun.net.httpserver.*;
 	command-line argument is the port number that accepts connections
 */
 public class Server {
-
     // The maximum number of waiting incoming connections to queue (dont need to know)
     private static final int MAX_WAITING_CONNECTIONS = 12;
 

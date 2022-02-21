@@ -15,7 +15,7 @@ public class RegisterService {
      * @param r Information about the user to register in the form of a RegisterRequest
      * @return The result of the operation in the form of a RegisterResult
      */
-    RegisterResult register(RegisterRequest r) {
+    public RegisterResult register(RegisterRequest r) {
         return null;
     }
 }

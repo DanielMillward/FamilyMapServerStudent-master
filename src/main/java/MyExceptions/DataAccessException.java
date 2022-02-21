@@ -6,7 +6,7 @@ public class DataAccessException extends Exception {
         super(message);
     }
 
-    DataAccessException()
+    public DataAccessException()
     {
         super();
     }
