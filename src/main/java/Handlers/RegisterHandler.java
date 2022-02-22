@@ -34,18 +34,4 @@ public class RegisterHandler extends ParentHandler implements HttpHandler {
         }
     }
 
-    /*
-        The readString method shows how to read a String from an InputStream.
-        From example code
-    */
-    private String readString(InputStream is) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        InputStreamReader sr = new InputStreamReader(is);
-        char[] buf = new char[1024];
-        int len;
-        while ((len = sr.read(buf)) > 0) {
-            sb.append(buf, 0, len);
-        }
-        return sb.toString();
-    }
 }
