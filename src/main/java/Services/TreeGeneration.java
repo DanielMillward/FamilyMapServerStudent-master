@@ -136,25 +136,61 @@ public class TreeGeneration {
     FullPerson generatePerson(Genders gender, int generations, String username, int childBirthYear) {
         FullPerson mother = null;
         FullPerson father = null;
-        int personBirthYear = childBirthYear - 69;
+        int personBirthYear = generateBirthYear(gender, childBirthYear);
         if (generations > 1) {
             mother = generatePerson(FEMALE, generations -1, username, personBirthYear);
             father = generatePerson(MALE, generations -1, username, personBirthYear);
 
+            mother = generatePerson(FEMALE, generations, username, personBirthYear);
+            father = generatePerson(MALE, generations, username, personBirthYear);
             // Set mother's and father's spouse IDs
-
-            // Add marriage events to mother and father
-            // (their marriage events must be in synch with each other
+            setSpouseIDInDatabase(mother, father);
+            //calls saveEventInDB, also generates the year
+            addMarriageEventInDatabase(personBirthYear, mother, father, username);
         }
 
         //make details of current person
-
-        Person person= new Person();
-        // Generate events for person (except marriage), based on childBirthYear (death after childbirth)
-        int birthyear = 0;
-        int deathyear = 0;
+        int personDeathYear = generateDeathYear(childBirthYear, personBirthYear);
+        String personFirstName = getRandomFirstName(gender);
+        String personLastName = getRandomLastName();
+        String newPersonID = getNewPersonID(personFirstName, personLastName);
+        String newFatherID;
+        String newMotherID;
+        if (father == null || mother == null) {
+            newFatherID = null;
+            newMotherID = null;
+        } else {
+            newFatherID = father.getPerson().getPersonID();
+            newMotherID = mother.getPerson().getPersonID();
+        }
+        String personGender;
+        if (gender == MALE) {
+            personGender = "m";
+        }  else {
+            personGender = "f";
+        }
+        Person person= new Person(newPersonID, username, personFirstName, personLastName,
+                personGender, newFatherID, newMotherID, null);
         // Save person in database
-        return new FullPerson(person, birthyear, deathyear);
+        return new FullPerson(person, personBirthYear, personDeathYear);
+    }
+
+    private int generateDeathYear(int childBirthYear, int personBirthYear) {
+        Random r = new Random();
+        int maxYear = personBirthYear + 120;
+        return r.nextInt(maxYear - childBirthYear) + childBirthYear;
+    }
+
+    private int generateBirthYear(Genders gender, int childBirthYear) {
+        Random r = new Random();
+        int maxYear = childBirthYear - 13;
+        int minYearF = childBirthYear - 50;
+        int minYearM = childBirthYear - 119;
+        if (gender == MALE) {
+            return r.nextInt(maxYear - minYearM) + minYearM;
+        } else {
+            return r.nextInt(maxYear - minYearF) + minYearF;
+        }
     }
 
     private Event getNewEventObject(String eventType, String username, String personID, int year) {
