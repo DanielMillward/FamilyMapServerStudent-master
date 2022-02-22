@@ -24,6 +24,7 @@ public class PersonDao {
         this.conn = conn;
     }
 
+
     /**
      * Adds a person into the database
      *
@@ -156,4 +157,18 @@ public class PersonDao {
         }
     }
 
+    public void setSpouseID(String personID, String spouseID) throws DataAccessException {
+        String sql = "UPDATE Person SET ContactName=? WHERE Country=?;";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            //Using the statements built-in set(type) functions we can pick the question mark we want
+            //to fill in and give it a proper value. The first argument corresponds to the first
+            //question mark found in our sql String
+            stmt.setString(1, personID);
+            stmt.setString(2, spouseID);
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new DataAccessException("Error encountered while inserting into the database");
+        }
+    }
 }

@@ -1,9 +1,6 @@
 package Services;
 
-import DAOs.AuthTokenDao;
-import DAOs.Database;
-import DAOs.EventDao;
-import DAOs.UserDao;
+import DAOs.*;
 import Models.*;
 import MyExceptions.DataAccessException;
 import RequestResult.LoginResult;
@@ -25,18 +22,18 @@ import static Services.TreeGeneration.Genders.MALE;
 public class TreeGeneration {
 
     Person generateTree(String gender, int generations, String username, String firstName, String lastName, int birthYear) throws FileNotFoundException {
+        /*
+        Generate mother and father (if necessary)
+         */
         FullPerson userMother = null;
         FullPerson userFather = null;
         if (generations >= 1) {
             userMother = generatePerson(FEMALE, generations, username, birthYear);
             userFather = generatePerson(MALE, generations, username, birthYear);
-
             // Set mother's and father's spouse IDs
             setSpouseIDInDatabase(userMother, userFather);
-
-            //marriage year must be 13 years before birthYear
-            //marriage must be before either death year
-            addMarriageEventInDatabase(birthYear, userMother, userFather);
+            //calls saveEventInDB, also generates the year
+            addMarriageEventInDatabase(birthYear, userMother, userFather, username);
         }
 
         /*
@@ -55,20 +52,86 @@ public class TreeGeneration {
         Person person= new Person(userPersonID, username, firstName, lastName,
                 gender, fatherID, motherID, null);
         // Generate birth event for user
-
         Event userBirth = getNewEventObject("birth", username, userPersonID, birthYear);
         // Save person in database
         saveEventInDB(userBirth);
         return person;
     }
 
-    private void saveEventInDB(Event userBirth) {
-        
+    private void addMarriageEventInDatabase(int birthYear, FullPerson userMother, FullPerson userFather, String username) {
+        //must be 13 years after mother or father birth
+        int secondOldYear = userMother.getBirthYear() + 13;
+        int firstOldYear = userFather.getBirthYear() + 13;
+        int oldYear = 0;
+        if (secondOldYear > firstOldYear) {
+            oldYear = secondOldYear;
+        } else {
+            oldYear = firstOldYear;
+        }
+        // must be before mother or father death
+        int firstRecentYear = userMother.getDeathYear();
+        int secondRecentYear = userFather.getDeathYear();
+        int recentYear = 9999;
+        if (firstRecentYear < secondRecentYear) {
+            recentYear = firstRecentYear;
+        } else {
+            recentYear = secondRecentYear;
+        }
+
+        Random r = new Random();
+        int marriageYear = r.nextInt(recentYear - oldYear) + oldYear;
+
+        Event motherMarriageEvent = getNewEventObject("marriage", username,
+                userMother.getPerson().getPersonID(), marriageYear);
+        Event fatherMarriageEvent = getNewEventObject("marriage", username,
+                userFather.getPerson().getPersonID(), marriageYear);
+        saveEventInDB(motherMarriageEvent);
+        saveEventInDB(fatherMarriageEvent);
     }
 
-    private int getMarriageYear(int birthYear, String personID, String personID1) {
-
+    private void setSpouseIDInDatabase(FullPerson userMother, FullPerson userFather) {
+        Database db= new Database();
+        try {
+            // Open database connection & make DAOs
+            db.openConnection();
+            PersonDao pDao = new PersonDao(db.getConnection());
+            // Insert event into database
+            pDao.setSpouseID(userMother.getPerson().getPersonID(), userFather.getPerson().getPersonID());
+            pDao.setSpouseID(userFather.getPerson().getPersonID(), userMother.getPerson().getPersonID());
+            // Close database connection, COMMIT transaction
+            db.closeConnection(true);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            // Close database connection, ROLLBACK transaction
+            try {
+                db.closeConnection(false);
+            } catch (DataAccessException e) {
+                e.printStackTrace();
+            }
+        }
     }
+
+    private void saveEventInDB(Event event) {
+        Database db= new Database();
+        try {
+            // Open database connection & make DAOs
+            db.openConnection();
+            EventDao eDao = new EventDao(db.getConnection());
+            // Insert event into database
+            eDao.insert(event);
+            // Close database connection, COMMIT transaction
+            db.closeConnection(true);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            // Close database connection, ROLLBACK transaction
+            try {
+                db.closeConnection(false);
+            } catch (DataAccessException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     FullPerson generatePerson(Genders gender, int generations, String username, int childBirthYear) {
         FullPerson mother = null;
@@ -87,7 +150,7 @@ public class TreeGeneration {
         //make details of current person
 
         Person person= new Person();
-        // Generate events for person (except marriage)
+        // Generate events for person (except marriage), based on childBirthYear (death after childbirth)
         int birthyear = 0;
         int deathyear = 0;
         // Save person in database
@@ -180,10 +243,6 @@ public class TreeGeneration {
         int lastDigits = (int) (randNum % 100000);
         return firstName + lastName + Integer.toString(lastDigits);
     }
-
-
-
-
 
     public enum Genders {
         MALE,
