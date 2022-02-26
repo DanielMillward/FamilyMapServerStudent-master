@@ -6,6 +6,7 @@ import DAOs.UserDao;
 import Models.AuthToken;
 import Models.User;
 import MyExceptions.DataAccessException;
+import MyExceptions.InvalidInputException;
 import RequestResult.LoginRequest;
 import RequestResult.LoginResult;
 
@@ -29,7 +30,7 @@ public class LoginService {
      * @param r Information about the user to login in the form of a LoginRequest
      * @return The result of the operation in the form of a LoginResult
      */
-    public LoginResult login(LoginRequest r){
+    public LoginResult login(LoginRequest r) throws InvalidInputException{
         Database db= new Database();
         boolean commit = false;
         try {
@@ -46,7 +47,8 @@ public class LoginService {
             User currUser = userdata.getUser(r.getUsername(), r.getPassword());
             // make sure user was not null
             if (currUser == null) {
-                throw new DataAccessException("User not found with given credentials");
+                System.out.println("Got an incorrect login");
+                throw new InvalidInputException();
             }
             // User exists, so then have the authtoken DAO make a new row
             String newAuthToken = currUser.getUsername() + System.currentTimeMillis();
@@ -59,7 +61,11 @@ public class LoginService {
             commit = true;
             return result;
 
-        } catch (Exception ex) {
+        } catch (InvalidInputException e) {
+            System.out.println("Rethrowing invalid input error");
+            throw new InvalidInputException();
+        }
+        catch (Exception ex) {
             ex.printStackTrace();
             // make and send back a failed login result object
             String errorMessage = "Error: " + ex.getMessage();

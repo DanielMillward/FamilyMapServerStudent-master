@@ -42,7 +42,7 @@ public class PersonService {
                     person.getLastName(), person.getGender(), person.getFatherID(), person.getMotherID(), true);
         } catch (DataAccessException e) {
             e.printStackTrace();
-            return new PersonResult(false, "Error: " + e.getMessage());
+            throw new DataAccessException(e.getMessage());
         } finally {
             try {
                 db.closeConnection(success);
@@ -58,7 +58,7 @@ public class PersonService {
      * @param r Information on the user for whom we're retrieving all the person objects
      * @return an AllPersonResult object with data of all the person requests (if successful)
      */
-    public AllPersonResult AllPerson(AllPersonRequest r) {
+    public AllPersonResult AllPerson(AllPersonRequest r) throws DataAccessException {
         //make sure both values aren't null, if so throw an error result
         if (r.getAuthToken() == null) {
             return new AllPersonResult(false, "Error: AuthToken is null");
@@ -77,7 +77,7 @@ public class PersonService {
         } catch (DataAccessException e) {
             System.out.println("Had an error");
             e.printStackTrace();
-            return new AllPersonResult(false, "Error: " + e.getMessage());
+            throw new DataAccessException(e.getMessage());
         } finally {
             try {
                 db.closeConnection(success);

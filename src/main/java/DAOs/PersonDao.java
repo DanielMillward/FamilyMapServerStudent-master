@@ -80,11 +80,14 @@ public class PersonDao {
                     System.out.println("Found username " + rs.getString("username"));
                     currUser = rs.getString("username");
                 } else {
-                    throw new DataAccessException("No user found for given authtoken");
+                    throw new InvalidAuthTokenException();
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
-                throw new DataAccessException("Incorrect Auth Token");
+                throw new DataAccessException("Error: problem encountered when inserting into database");
+            } catch (InvalidAuthTokenException e) {
+                e.printStackTrace();
+                throw new DataAccessException("Error: Incorrect Auth Token");
             } finally {
                 if(rs != null) {
                     try {

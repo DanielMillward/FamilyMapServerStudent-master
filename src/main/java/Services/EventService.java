@@ -22,7 +22,7 @@ public class EventService {
      * @param r information about the request
      * @return an EventResult object with data of the request (if successful)
      */
-    public EventResult event(EventRequest r) {
+    public EventResult event(EventRequest r) throws DataAccessException {
         //make sure both values aren't null, if so throw an error result
         if (r.getEventID() == null || r.getAuthToken() == null) {
             return new EventResult("Error: AuthToken or EventID is null", false);
@@ -41,7 +41,7 @@ public class EventService {
                                    event.getLongitude(), event.getYear(), true);
         } catch (DataAccessException e) {
             e.printStackTrace();
-            return new EventResult("Error: No event found", false);
+            throw new DataAccessException(e.getMessage());
         } finally {
             try {
                 db.closeConnection(success);
@@ -57,7 +57,7 @@ public class EventService {
      * @param r information about the request
      * @return an AllEventResult object with data of all the event requests (if successful)
      */
-    public AllEventResult AllEvent(AllEventRequest r) {
+    public AllEventResult AllEvent(AllEventRequest r) throws DataAccessException {
         //make sure both values aren't null, if so throw an error result
         if (r.getAuthToken() == null) {
             return new AllEventResult(false, "Error: Auth token null");
@@ -76,7 +76,7 @@ public class EventService {
         } catch (DataAccessException e) {
             System.out.println("Had an error");
             e.printStackTrace();
-            return new AllEventResult(false, "Error: " + e.getMessage());
+            throw new DataAccessException(e.getMessage());
         } finally {
             try {
                 db.closeConnection(success);

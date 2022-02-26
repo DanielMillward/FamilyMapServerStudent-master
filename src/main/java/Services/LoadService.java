@@ -92,7 +92,7 @@ public class LoadService {
 
             //loading was successful!
             shouldCommit = true;
-            return new LoadResult("Load was successful!", true);
+            return new LoadResult("Successfully added " + r.getUsers().size() + " users, " + r.getPersons().size() + " persons, and " + r.getEvents().size() + " events to the database.", true);
         } catch (DataAccessException e) {
             e.printStackTrace();
             return new LoadResult("Error: Accessing database failed for some reason", false);

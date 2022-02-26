@@ -60,14 +60,14 @@ public class RegisterService {
         } catch (UserAlreadyRegisteredException ex) {
             ex.printStackTrace();
             db.closeConnection(false);
-            return new RegisterResult("Actual user already here!!!!", false);
+            throw new UserAlreadyRegisteredException();
         }
         commit = false;
         // if all good, treeGen and authtoken the user
         Connection newConnection = db.getConnection();
         try {
             // Open database connection & make DAOs
-            UserDao uDao = new UserDao(newConnection);
+            //UserDao uDao = new UserDao(newConnection);
 
             treeGen.generateTree(r.getGender(),4, r.getUsername(), r.getFirstName(),
                     r.getLastName(), 2000, newUserPersonID, newConnection);

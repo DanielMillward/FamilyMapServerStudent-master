@@ -2,6 +2,7 @@ package Handlers;
 
 import DAOs.Database;
 import MyExceptions.DataAccessException;
+import MyExceptions.InvalidInputException;
 import MyExceptions.UserAlreadyRegisteredException;
 import RequestResult.*;
 import Services.*;
@@ -87,13 +88,14 @@ public class ParentHandler {
                         break;
                 }
             } catch (UserAlreadyRegisteredException uare) {
-                uare.printStackTrace();
-                result = new ErrorResult(uare.getMessage(), false);
-                System.out.println("Got a user already registered error");
+                sendBadResponse("Error: User already registered", exchange, gson);
+                return;
             } catch (DataAccessException dae) {
-                dae.printStackTrace();
-                result = new ErrorResult(dae.getMessage(), false);
-                System.out.println("Error: There was a problem getting the information. Please try again later.");
+                sendBadResponse("Error: " + dae.getMessage(), exchange, gson);
+                return;
+            } catch (InvalidInputException e) {
+                sendBadResponse("Error: Invalid credentials", exchange, gson);
+                return;
             }
             System.out.println(result);
             //send our response with data from the above switch cases
@@ -112,6 +114,19 @@ public class ParentHandler {
             exchange.getResponseBody().close();
         }
     }
+
+    private void sendBadResponse(String message, HttpExchange exchange, Gson gson) {
+        try {
+            Object result = new ErrorResult(message, false);
+            exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST,0);
+            Writer resBody= new OutputStreamWriter(exchange.getResponseBody());
+            gson.toJson(result, resBody);
+            resBody.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private EventRequest getEventRequestFromParams(Headers reqHeaders, String reqEventID) {
         //Authorization

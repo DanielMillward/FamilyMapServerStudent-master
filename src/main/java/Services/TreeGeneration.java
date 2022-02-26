@@ -145,12 +145,15 @@ public class TreeGeneration {
         Random r = new Random();
         int marriageYear = r.nextInt(recentYear - oldYear) + oldYear;
 
-        Event motherMarriageEvent = getNewEventObject("marriage", username,
+        Event mMarrEv = getNewEventObject("marriage", username,
                 userMother.getPerson().getPersonID(), marriageYear);
-        Event fatherMarriageEvent = getNewEventObject("marriage", username,
-                userFather.getPerson().getPersonID(), marriageYear);
-        saveEventInDB(motherMarriageEvent, conn);
-        saveEventInDB(fatherMarriageEvent, conn);
+        Event fMarrEv = new Event(getNewEventID("marriage",userFather.getPerson().getPersonID()), username, userFather.getPerson().getPersonID(),
+                mMarrEv.getLatitude(), mMarrEv.getLongitude(),
+                mMarrEv.getCountry(), mMarrEv.getCity(), "marriage", mMarrEv.getYear());
+
+                //getNewEventObject("marriage", username, userFather.getPerson().getPersonID(), marriageYear);
+        saveEventInDB(mMarrEv, conn);
+        saveEventInDB(fMarrEv, conn);
     }
 
     private void setSpouseIDInDatabase(FullPerson userMother, FullPerson userFather, Connection conn) {
@@ -297,7 +300,7 @@ public class TreeGeneration {
 
     public String getNewPersonID(String firstName, String lastName) {
         long randNum = System.currentTimeMillis();
-        int lastDigits = (int) (randNum % 100000);
+        int lastDigits = (int) (randNum % 1000000);
         return firstName + lastName + Integer.toString(lastDigits);
     }
 

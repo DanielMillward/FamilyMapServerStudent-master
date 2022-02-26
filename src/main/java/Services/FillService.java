@@ -54,8 +54,10 @@ public class FillService {
 
             // Close database connection, COMMIT transaction
             db.closeConnection(true);
-
-            return new FillResult("Successfully filled for user " + r.getUsername(), true);
+            int numPersonsAdded = getNumPersonsByGen(numGens);
+            int numEventsAdded = getNumEventsByGen(numGens);
+            System.out.println("numGens is " + numGens + " numpeople is " + numPersonsAdded + " num events is " + numEventsAdded);
+            return new FillResult("Successfully added " + numPersonsAdded + " persons and " + numEventsAdded + " events to the database.", true);
 
         } catch (Exception ex) { //issue adding stuff or logging them in
             ex.printStackTrace();
@@ -68,5 +70,29 @@ public class FillService {
             return new FillResult("Error: " + ex.getMessage(), false);
         }
 
+    }
+
+    private int getNumEventsByGen(int numGens) {
+        //adds one birth event for everyone, including user
+        int output = getNumPersonsByGen(numGens);
+        //getnumpersons, subtract 1 for rest
+        int allExceptUser = output - 1;
+        //add marriage (half of allExceptUser)
+        output += allExceptUser / 2;
+        //add death
+        output += allExceptUser;
+        return output;
+
+    }
+
+    private int getNumPersonsByGen(int numGens) {
+        if (numGens == 0) {
+            return 1;
+        }
+        int output = 0;
+        for (int i = 0; i <= numGens; ++i) {
+            output += Math.pow(2,i);
+        }
+        return output;
     }
 }
