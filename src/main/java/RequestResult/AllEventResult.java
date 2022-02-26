@@ -2,6 +2,8 @@ package RequestResult;
 
 import Models.Event;
 
+import java.util.ArrayList;
+
 /**
  * Stores the data for an HTTP result with all the event data for the user.
  */
@@ -9,7 +11,7 @@ public class AllEventResult {
     /**
      * Array of all the events
      */
-    private Event[] data;
+    private ArrayList<Event> data;
     /**
      * Whether the data access was successful
      */
@@ -25,7 +27,7 @@ public class AllEventResult {
      * @param data all the event data for the user
      * @param success whether it was successful
      */
-    public AllEventResult(Event[] data, boolean success) {
+    public AllEventResult(ArrayList<Event> data, boolean success) {
         this.data = data;
         this.success = success;
     }
@@ -41,11 +43,11 @@ public class AllEventResult {
         this.message = message;
     }
 
-    public Event[] getData() {
+    public ArrayList<Event> getData() {
         return data;
     }
 
-    public void setData(Event[] data) {
+    public void setData(ArrayList<Event> data) {
         this.data = data;
     }
 

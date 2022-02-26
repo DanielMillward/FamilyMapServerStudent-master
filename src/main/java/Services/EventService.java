@@ -1,9 +1,15 @@
 package Services;
 
-import RequestResult.AllEventRequest;
-import RequestResult.AllEventResult;
-import RequestResult.EventRequest;
-import RequestResult.EventResult;
+import DAOs.Database;
+import DAOs.EventDao;
+import DAOs.PersonDao;
+import Models.Event;
+import Models.Person;
+import MyExceptions.DataAccessException;
+import RequestResult.*;
+
+import java.sql.Connection;
+import java.util.ArrayList;
 
 /**
  * Handles the retrieval of event objects for the Handler classes
@@ -16,8 +22,33 @@ public class EventService {
      * @param r information about the request
      * @return an EventResult object with data of the request (if successful)
      */
-    EventResult event(EventRequest r) {
-        return null;
+    public EventResult event(EventRequest r) {
+        //make sure both values aren't null, if so throw an error result
+        if (r.getEventID() == null || r.getAuthToken() == null) {
+            return new EventResult("Error: AuthToken or EventID is null", false);
+        }
+        //make persondao, get it
+        Database db = new Database();
+        boolean success = false;
+        try {
+            EventDao eDao = new EventDao(db.getConnection());
+            ArrayList<Event> result = eDao.getEvents(r.getAuthToken(), r.getEventID());
+            Event event = result.get(0);
+            System.out.println(event);
+            success = true;
+            return new EventResult(event.getAssociatedUsername(), event.getEventID(), event.getPersonID(),
+                                   event.getCountry(), event.getCity(), event.getEventType(), event.getLatitude(),
+                                   event.getLongitude(), event.getYear(), true);
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+            return new EventResult("Error: No event found", false);
+        } finally {
+            try {
+                db.closeConnection(success);
+            } catch (DataAccessException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
@@ -26,5 +57,32 @@ public class EventService {
      * @param r information about the request
      * @return an AllEventResult object with data of all the event requests (if successful)
      */
-    AllEventResult AllEvent(AllEventRequest r) {return null;}
+    public AllEventResult AllEvent(AllEventRequest r) {
+        //make sure both values aren't null, if so throw an error result
+        if (r.getAuthToken() == null) {
+            return new AllEventResult(false, "Error: Auth token null");
+        }
+        Database db = new Database();
+        boolean success = false;
+        try {
+            //make eventdao, get it
+            System.out.println("Trying to get lots of events...");
+            Connection conn = db.getConnection();
+            EventDao eDao = new EventDao(conn);
+            ArrayList<Event> result = eDao.getEvents(r.getAuthToken(), null);
+            System.out.println("Event ID is " + result.get(0).getPersonID());
+            success = true;
+            return new AllEventResult(result, true);
+        } catch (DataAccessException e) {
+            System.out.println("Had an error");
+            e.printStackTrace();
+            return new AllEventResult(false, "Error: " + e.getMessage());
+        } finally {
+            try {
+                db.closeConnection(success);
+            } catch (DataAccessException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

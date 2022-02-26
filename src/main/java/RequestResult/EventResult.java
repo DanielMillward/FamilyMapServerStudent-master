@@ -32,15 +32,15 @@ public class EventResult {
     /**
      *Latitude of event’s location
      */
-    private float latitude;
+    private Float latitude;
     /**
      *Longitude of event’s location
      */
-    private float longitude;
+    private Float longitude;
     /**
      *Year in which event occurred
      */
-    private int year;
+    private Integer year;
     /**
      * Whether the data access was successful
      */

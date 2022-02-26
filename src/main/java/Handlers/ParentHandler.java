@@ -64,7 +64,7 @@ public class ParentHandler {
                         result = loadService.load(loadRequest);
                         break;
                     case PERSON:
-                        String reqPersonID = getPersonIDFromParameter(parameters);
+                        String reqPersonID = getIDFromParameter(parameters);
                         PersonService personService = new PersonService();
                         if (reqPersonID == null) {
                             AllPersonRequest personRequest = getAllPersonRequestFromParams(reqHeaders);
@@ -72,6 +72,17 @@ public class ParentHandler {
                         } else {
                             PersonRequest singlePersonReq = getPersonRequestFromParams(reqHeaders, reqPersonID);
                             result = personService.person(singlePersonReq);
+                        }
+                        break;
+                    case EVENT:
+                        String reqEventID = getIDFromParameter(parameters);
+                        EventService eventService = new EventService();
+                        if (reqEventID == null) {
+                            AllEventRequest eventRequest = getAllEventRequestFromParams(reqHeaders);
+                            result = eventService.AllEvent(eventRequest);
+                        } else {
+                            EventRequest singleEventReq = getEventRequestFromParams(reqHeaders, reqEventID);
+                            result = eventService.event(singleEventReq);
                         }
                         break;
                 }
@@ -100,6 +111,35 @@ public class ParentHandler {
             System.out.println("Bad request...");
             exchange.getResponseBody().close();
         }
+    }
+
+    private EventRequest getEventRequestFromParams(Headers reqHeaders, String reqEventID) {
+        //Authorization
+        String authToken = null;
+        for (Map.Entry<String, List<String>> header : reqHeaders.entrySet()) {
+            if (Objects.equals(header.getKey(), "Authorization")) {
+                authToken = header.getValue().get(0);
+            }
+        }
+        if (authToken != null) {
+            return new EventRequest(reqEventID, authToken);
+        } else {
+            return null;
+        }
+    }
+
+    private AllEventRequest getAllEventRequestFromParams(Headers reqHeaders) {
+        //Authorization
+        String authToken = null;
+        for (Map.Entry<String, List<String>> header : reqHeaders.entrySet()) {
+            if (Objects.equals(header.getKey(), "Authorization")) {
+                authToken = header.getValue().get(0);
+            }
+        }
+        if (authToken != null) {
+            return new AllEventRequest(authToken);
+        }
+        return null;
     }
 
     private PersonRequest getPersonRequestFromParams(Headers requestHeaders, String personID) {
@@ -131,7 +171,7 @@ public class ParentHandler {
         return null;
     }
 
-    private String getPersonIDFromParameter(String parameters) {
+    private String getIDFromParameter(String parameters) {
         String[] params = parameters.split("/");
         // handles a string of fill/username/4 as well as just fill/username
         if (params.length == 3) {
