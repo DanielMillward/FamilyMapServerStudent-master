@@ -13,7 +13,10 @@ import com.sun.net.httpserver.HttpHandler;
 import java.io.*;
 
 import java.net.HttpURLConnection;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import Logger.MyLogger;
 
 public class LoginHandler extends ParentHandler implements HttpHandler {
 
@@ -22,7 +25,7 @@ public class LoginHandler extends ParentHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-
+        MyLogger.log(Level.INFO, "Recieved Login Request");
         try {
             parentHandle(exchange, "post", ReqResType.LOGIN);
         }

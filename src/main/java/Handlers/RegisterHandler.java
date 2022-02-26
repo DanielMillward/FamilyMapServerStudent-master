@@ -2,7 +2,9 @@ package Handlers;
 import java.io.*;
 import java.lang.reflect.Type;
 import java.net.*;
+import java.util.logging.Level;
 
+import Logger.MyLogger;
 import MyExceptions.DataAccessException;
 import RequestResult.LoginRequest;
 import RequestResult.LoginResult;
@@ -24,8 +26,8 @@ public class RegisterHandler extends ParentHandler implements HttpHandler {
     // The HttpExchange object also lets handler make response and send it back
     @Override
     public void handle(HttpExchange exchange) throws IOException {
+        MyLogger.log(Level.INFO, "Recieved Registration Request");
         try {
-            System.out.println("Register being called...");
             parentHandle(exchange, "post", ReqResType.REGISTER);
         }
         catch (IOException e) {

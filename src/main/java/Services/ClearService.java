@@ -9,6 +9,7 @@ import MyExceptions.DataAccessException;
 import RequestResult.ClearResult;
 import RequestResult.LoginResult;
 
+import java.util.logging.Logger;
 /**
  * Handles the clearing of the database
  */

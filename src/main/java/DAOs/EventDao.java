@@ -37,6 +37,9 @@ public class EventDao {
         //marks we can change them later with help from the statement
         String sql = "INSERT INTO Events (eventID, associatedUsername, personID, latitude, longitude, " +
                 "country, city, eventType, year) VALUES(?,?,?,?,?,?,?,?,?)";
+        if (event == null || event.getEventID() == null || event.getAssociatedUsername() == null || event.getPersonID() == null ||event.getCountry() == null ||event.getCity() == null ||event.getEventType() == null ) {
+            throw new DataAccessException("Null or Incomplete data given");
+        }
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             //Using the statements built-in set(type) functions we can pick the question mark we want
             //to fill in and give it a proper value. The first argument corresponds to the first

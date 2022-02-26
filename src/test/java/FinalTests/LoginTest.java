@@ -1,12 +1,10 @@
-package APITests;
+package FinalTests;
 
 import DAOs.AuthTokenDao;
 import DAOs.UserDao;
 import Models.User;
 import MyExceptions.DataAccessException;
 import DAOs.Database;
-import DAOs.EventDao;
-import Models.Event;
 import MyExceptions.UserAlreadyRegisteredException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,9 +15,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.file.Path;
 import java.sql.Connection;
 
 import static java.nio.file.Files.readString;

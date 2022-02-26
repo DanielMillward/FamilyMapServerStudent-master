@@ -1,5 +1,6 @@
 package DAOs;
 
+import Logger.MyLogger;
 import Models.AuthToken;
 import Models.Event;
 import MyExceptions.DataAccessException;
@@ -8,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
 
 /**
  * Provides access to authentication token related queries to the SQLite database.
@@ -37,6 +39,9 @@ public class AuthTokenDao {
         AuthToken output;
         ResultSet rs = null;
         String sql = "SELECT * FROM Authtoken WHERE authtoken = ?;";
+        if (authToken == null || authToken.equals("")) {
+            throw new DataAccessException("No authToken given");
+        }
         //search authtoken table for a row with matching authtoken
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, authToken);
@@ -44,6 +49,8 @@ public class AuthTokenDao {
             if (rs.next()) {
                 output = new AuthToken(rs.getString("authtoken"), rs.getString("username"));
                 return output;
+            } else {
+                throw new DataAccessException("No AuthToken object found for given authtoken string");
             }
         } catch (SQLException e) {
             //had an error searching for it
@@ -60,7 +67,6 @@ public class AuthTokenDao {
             }
         }
         //didn't find it?
-        return null;
     }
 
     /**
@@ -71,6 +77,9 @@ public class AuthTokenDao {
      */
     public void addAuthToken(AuthToken authtoken) throws DataAccessException {
         String sql = "INSERT INTO Authtoken (authtoken, username) VALUES(?,?)";
+        if (authtoken.getUsername() == null || authtoken.getAuthtoken() == null) {
+            throw new DataAccessException("No username or authtoken given");
+        }
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             //replace question marks with given data
             stmt.setString(1, authtoken.getAuthtoken());
@@ -79,7 +88,7 @@ public class AuthTokenDao {
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("authtoken SQL error " + e.getMessage());
+            MyLogger.log(Level.INFO, "Authtoken error: " + e.getMessage());
             throw new DataAccessException("Error encountered while inserting into the database");
         }
     }

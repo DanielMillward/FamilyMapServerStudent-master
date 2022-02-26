@@ -1,6 +1,4 @@
 General todo list:
-- when registering, differentiate between bad data and a user already registered
-- when adding people, if you randomly generate a name already in the database, deal with that
 - For logging incoming requests, make it actually readable (e.g. get rid of verbose errors?)
 - gracefully handle trying to put in repeating personID things and eventID things in their respective db's
 - rewrite personDao
@@ -10,6 +8,7 @@ General todo list:
 - make sure the error handling and messages look nice and mesh well together
 - make success/message order consistent everywhere
 - turn println into logs or delete entirely
+ - take authtoken handling out of person/event daos into its own thing
 
 Implementation tips:
  - only the outermost service class gets and closes connections to a database

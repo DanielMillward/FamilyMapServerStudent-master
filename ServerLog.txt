@@ -1,0 +1,30 @@
+Feb 26, 2022 2:28:44 PM Logger.MyLogger log
+INFO: Starting up Server
+Feb 26, 2022 2:29:07 PM Logger.MyLogger log
+INFO: Starting up Server
+Feb 26, 2022 2:48:12 PM Logger.MyLogger log
+INFO: Initializing Server
+Feb 26, 2022 2:48:12 PM Logger.MyLogger log
+INFO: Server Started
+Feb 26, 2022 2:48:25 PM Logger.MyLogger log
+INFO: Recieved File Request
+Feb 26, 2022 2:48:25 PM Logger.MyLogger log
+INFO: Recieved File Request
+Feb 26, 2022 2:48:25 PM Logger.MyLogger log
+INFO: Recieved File Request
+Feb 26, 2022 2:48:29 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Feb 26, 2022 2:48:29 PM Logger.MyLogger log
+INFO: Cleared database
+Feb 26, 2022 2:48:33 PM Logger.MyLogger log
+INFO: Recieved Person Request
+Feb 26, 2022 2:48:33 PM Logger.MyLogger log
+INFO: Got DataAccessError: No user find username for given authtoken
+Feb 26, 2022 2:48:56 PM Logger.MyLogger log
+INFO: Recieved Registration Request
+Feb 26, 2022 2:48:56 PM Logger.MyLogger log
+INFO: Failed to register user already in database: null
+Feb 26, 2022 2:49:00 PM Logger.MyLogger log
+INFO: Recieved Registration Request
+Feb 26, 2022 2:49:00 PM Logger.MyLogger log
+INFO: Registered user username

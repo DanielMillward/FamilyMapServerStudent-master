@@ -1,8 +1,9 @@
 import java.io.*;
 import java.net.*;
-import java.util.logging.Logger;
+import java.util.logging.Level;
 
 import Handlers.*;
+import Logger.MyLogger;
 import com.sun.net.httpserver.*;
 
 /*
@@ -19,7 +20,7 @@ public class Server {
     private void run(String portNumber) {
 
         //about to initialize server
-        System.out.println("Initializing HTTP Server");
+        MyLogger.log(Level.INFO, "Initializing Server");
         try {
             // Make new server given port and max waiting connections
             server = HttpServer.create(
@@ -34,8 +35,7 @@ public class Server {
         //using default executor (dont need to know)
         server.setExecutor(null);
 
-        //about to make contexts, aka handlers?
-        System.out.println("Creating contexts");
+        //about to make contexts, aka handlers
 
         // forwards requests for /user/register to RegisterHandler for handling
         server.createContext("/user/register", new RegisterHandler());
@@ -67,13 +67,13 @@ public class Server {
         server.createContext("/", new FileHandler());
 
         // about to start server
-        System.out.println("Starting server");
+        //Logger.MyLogger.log(Level.INFO, "Starting up Server");
 
         //server starts, main method completes but program will still run since server is still running
         server.start();
 
         //server has successfully started.
-        System.out.println("Server started");
+        MyLogger.log(Level.INFO, "Server Started");
     }
 
     // "args" is just one number, the port

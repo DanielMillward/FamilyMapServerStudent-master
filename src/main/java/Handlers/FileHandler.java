@@ -1,5 +1,6 @@
 package Handlers;
 
+import Logger.MyLogger;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -8,10 +9,12 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.nio.file.Files;
+import java.util.logging.Level;
 
 public class FileHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
+        MyLogger.log(Level.INFO, "Recieved File Request");
         boolean success = false;
         try {
             // Make sure request method is GET

@@ -1,6 +1,7 @@
 package Handlers;
 
 import DAOs.Database;
+import Logger.MyLogger;
 import MyExceptions.DataAccessException;
 import MyExceptions.InvalidInputException;
 import MyExceptions.UserAlreadyRegisteredException;
@@ -14,6 +15,7 @@ import com.sun.net.httpserver.HttpExchange;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.util.*;
+import java.util.logging.Level;
 
 public class ParentHandler {
 
@@ -26,7 +28,6 @@ public class ParentHandler {
             Headers reqHeaders = exchange.getRequestHeaders(); // Get header
             InputStream reqBody = exchange.getRequestBody(); // Get input stream
             String parameters =  exchange.getRequestURI().toString();
-            //System.out.println("parameters: " + parameters); // gets everything after localhost, e.g. /fill/user
             String reqData = readString(reqBody); // turn input stream into string
             Gson gson = new Gson();
             Object result = null; //setup result
@@ -39,30 +40,30 @@ public class ParentHandler {
                         LoginRequest loginrequest = (LoginRequest) gson.fromJson(reqData, LoginRequest.class);
                         LoginService loginservice = new LoginService();
                         result = loginservice.login(loginrequest);
+                        MyLogger.log(Level.INFO, "Logged in user " + loginrequest.getUsername());
                         break;
                     case REGISTER:
-                        System.out.println("Got a REGISTER request");
                         RegisterRequest registerrequest = (RegisterRequest) gson.fromJson(reqData, RegisterRequest.class);
                         RegisterService registerservice = new RegisterService();
                         result = registerservice.register(registerrequest);
-                        System.out.println("should have successfully registered");
-                        System.out.println(result);
+                        MyLogger.log(Level.INFO, "Registered user " + registerrequest.getUsername());
                         break;
                     case CLEAR:
                         ClearService clearservice = new ClearService();
                         result = clearservice.clear();
+                        MyLogger.log(Level.INFO, "Cleared database");
                         break;
                     case FILL:
-                        System.out.println("got a fill request!");
                         FillRequest fillRequest = getFillRequestFromParams(parameters);
                         FillService fillservice = new FillService();
                         result = fillservice.fill(fillRequest);
+                        MyLogger.log(Level.INFO, "Filled database for user " + fillRequest.getUsername());
                         break;
                     case LOAD:
                         LoadRequest loadRequest = (LoadRequest) gson.fromJson(reqData, LoadRequest.class);
-                        System.out.println(loadRequest.getUsers().get(0).getUsername());
                         LoadService loadService = new LoadService();
                         result = loadService.load(loadRequest);
+                        MyLogger.log(Level.INFO, "Loaded data into database successfully");
                         break;
                     case PERSON:
                         String reqPersonID = getIDFromParameter(parameters);
@@ -70,9 +71,11 @@ public class ParentHandler {
                         if (reqPersonID == null) {
                             AllPersonRequest personRequest = getAllPersonRequestFromParams(reqHeaders);
                             result = personService.AllPerson(personRequest);
+                            MyLogger.log(Level.INFO, "Retrieved all Person objects for user with authToken " + personRequest.getAuthToken());
                         } else {
                             PersonRequest singlePersonReq = getPersonRequestFromParams(reqHeaders, reqPersonID);
                             result = personService.person(singlePersonReq);
+                            MyLogger.log(Level.INFO, "Retrieved Person object with ID "+singlePersonReq.getPersonID()+" for user with authToken " + singlePersonReq.getAuthToken());
                         }
                         break;
                     case EVENT:
@@ -81,23 +84,27 @@ public class ParentHandler {
                         if (reqEventID == null) {
                             AllEventRequest eventRequest = getAllEventRequestFromParams(reqHeaders);
                             result = eventService.AllEvent(eventRequest);
+                            MyLogger.log(Level.INFO, "Retrieved all Event objects for user with authToken " + eventRequest.getAuthToken());
                         } else {
                             EventRequest singleEventReq = getEventRequestFromParams(reqHeaders, reqEventID);
                             result = eventService.event(singleEventReq);
+                            MyLogger.log(Level.INFO, "Retrieved Person object with ID "+singleEventReq.getEventID()+" for user with authToken " + singleEventReq.getAuthToken());
                         }
                         break;
                 }
             } catch (UserAlreadyRegisteredException uare) {
+                MyLogger.log(Level.INFO, "Failed to register user already in database: " + uare.getMessage());
                 sendBadResponse("Error: User already registered", exchange, gson);
                 return;
             } catch (DataAccessException dae) {
+                MyLogger.log(Level.INFO, "Got DataAccessError: " + dae.getMessage());
                 sendBadResponse("Error: " + dae.getMessage(), exchange, gson);
                 return;
             } catch (InvalidInputException e) {
                 sendBadResponse("Error: Invalid credentials", exchange, gson);
+                MyLogger.log(Level.INFO, "Failed to fulfill request due to incorrect input: " + e.getMessage());
                 return;
             }
-            System.out.println(result);
             //send our response with data from the above switch cases
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
             Writer resBody= new OutputStreamWriter(exchange.getResponseBody());
@@ -110,8 +117,8 @@ public class ParentHandler {
         // The HTTP request was invalid somehow, so we return a "bad request" response
         if (!success) {
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
-            System.out.println("Bad request...");
             exchange.getResponseBody().close();
+            MyLogger.log(Level.WARNING, "Got a bad HTTP request: " + exchange.getResponseBody());
         }
     }
 
@@ -124,6 +131,7 @@ public class ParentHandler {
             resBody.close();
         } catch (IOException e) {
             e.printStackTrace();
+
         }
     }
 
