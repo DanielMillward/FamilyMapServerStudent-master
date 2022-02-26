@@ -67,16 +67,49 @@ public class PersonDao {
     public ArrayList<Person> getPersons(String authToken, String personID) throws DataAccessException {
         ArrayList<Person> persons = new ArrayList<>();
         ResultSet rs = null;
-        if (personID != null) {
-            String sql = "SELECT * FROM Person WHERE personID = ?;";
+        if (personID != null && authToken != null) {
+            String usersql = "SELECT * FROM AuthToken WHERE authtoken = ?;";
+            String sql = "SELECT * FROM Person WHERE personID = ? AND associatedUsername = ?;";
+            String currUser = new String();
+            // 1. Get the corresponding username for the authtoken
+            try (PreparedStatement stmt = conn.prepareStatement(usersql)) {
+                stmt.setString(1, authToken);
+                System.out.println("Trying to find user....");
+                rs = stmt.executeQuery();
+                if (rs.next()) {
+                    System.out.println("Found username " + rs.getString("username"));
+                    currUser = rs.getString("username");
+                } else {
+                    throw new DataAccessException("No user found for given authtoken");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                throw new DataAccessException("Incorrect Auth Token");
+            } finally {
+                if(rs != null) {
+                    try {
+                        rs.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+            if (currUser == null) {
+                throw new DataAccessException("No user found for given authToken");
+            }
+
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
                 stmt.setString(1, personID);
+                stmt.setString(2, currUser);
                 rs = stmt.executeQuery();
                 if (rs.next()) {
                     persons.add(new Person(rs.getString("personID"), rs.getString("associatedUsername"),
                             rs.getString("firstName"), rs.getString("lastName"), rs.getString("gender"),
                             rs.getString("fatherID"), rs.getString("motherID"), rs.getString("spouseID")));
                     return persons;
+                } else {
+                    throw new DataAccessException("No person found for given PersonID and AuthToken");
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -99,9 +132,13 @@ public class PersonDao {
             // 1. Get the corresponding username for the authtoken
             try (PreparedStatement stmt = conn.prepareStatement(usersql)) {
                 stmt.setString(1, authToken);
+                System.out.println("Trying to find user for allpeople....");
                 rs = stmt.executeQuery();
                 if (rs.next()) {
+                    System.out.println("found a user!");
                     currUser = rs.getString("username");
+                } else {
+                    throw new DataAccessException("No user find username for given authtoken");
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -122,15 +159,17 @@ public class PersonDao {
                 stmt.setString(1, currUser);
                 rs = stmt.executeQuery();
                 //add all the rows we got to the persons arraylist
+                boolean foundSomething = false;
                 while (rs.next()) {
                     persons.add(new Person(rs.getString("personID"), rs.getString("associatedUsername"),
                             rs.getString("firstName"), rs.getString("lastName"), rs.getString("gender"),
                             rs.getString("fatherID"), rs.getString("motherID"), rs.getString("spouseID")));
+                    foundSomething = true;
                 }
                 if (!persons.isEmpty()) {
                     return persons;
                 } else {
-                    return null;
+                    throw new DataAccessException("No people found for given authToken username");
                 }
             } catch (SQLException e) {
                 e.printStackTrace();

@@ -25,7 +25,7 @@ public class ParentHandler {
             Headers reqHeaders = exchange.getRequestHeaders(); // Get header
             InputStream reqBody = exchange.getRequestBody(); // Get input stream
             String parameters =  exchange.getRequestURI().toString();
-            System.out.println("parameters: " + parameters); // gets everything after localhost, e.g. /fill/user
+            //System.out.println("parameters: " + parameters); // gets everything after localhost, e.g. /fill/user
             String reqData = readString(reqBody); // turn input stream into string
             Gson gson = new Gson();
             Object result = null; //setup result
@@ -66,7 +66,7 @@ public class ParentHandler {
                     case PERSON:
                         String reqPersonID = getPersonIDFromParameter(parameters);
                         PersonService personService = new PersonService();
-                        if ( reqPersonID == null) {
+                        if (reqPersonID == null) {
                             AllPersonRequest personRequest = getAllPersonRequestFromParams(reqHeaders);
                             result = personService.AllPerson(personRequest);
                         } else {
@@ -82,7 +82,7 @@ public class ParentHandler {
             } catch (DataAccessException dae) {
                 dae.printStackTrace();
                 result = new ErrorResult(dae.getMessage(), false);
-                System.out.println("Got a Data Access Exception");
+                System.out.println("Error: There was a problem getting the information. Please try again later.");
             }
             System.out.println(result);
             //send our response with data from the above switch cases

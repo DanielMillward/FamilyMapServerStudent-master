@@ -27,10 +27,9 @@ public class AllPersonResult {
      * @param data all the person data for the user
      * @param success whether it was successful
      */
-    public AllPersonResult(ArrayList<Person> data, boolean success, String message) {
+    public AllPersonResult(ArrayList<Person> data, boolean success) {
         this.data = data;
         this.success = success;
-        this.message = message;
     }
 
     /**
