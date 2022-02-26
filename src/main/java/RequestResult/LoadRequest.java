@@ -1,5 +1,11 @@
 package RequestResult;
 
+import Models.Event;
+import Models.Person;
+import Models.User;
+
+import java.util.ArrayList;
+
 /**
  * Stores data for an HTTP request to load data
  */
@@ -7,16 +13,15 @@ public class LoadRequest {
     /**
      * the users we want to load data for
      */
-    private String users;
+    private ArrayList<User> users;
     /**
      * person objects we want to add to the database
      */
-    private String persons;
+    private ArrayList<Person> persons;
     /**
      * event objects we want to add to the database
      */
-    private String events;
-
+    private ArrayList<Event> events;
 
     /**
      * Generates a LoadRequest object
@@ -25,34 +30,33 @@ public class LoadRequest {
      * @param persons person objects we want to add to the database
      * @param events event objects we want to add to the database
      */
-    public LoadRequest(String users, String persons, String events) {
+    public LoadRequest(ArrayList<User> users, ArrayList<Person> persons, ArrayList<Event> events) {
         this.users = users;
         this.persons = persons;
         this.events = events;
     }
 
-
-    public String getUsers() {
+    public ArrayList<User> getUsers() {
         return users;
     }
 
-    public void setUsers(String users) {
+    public void setUsers(ArrayList<User> users) {
         this.users = users;
     }
 
-    public String getPersons() {
+    public ArrayList<Person> getPersons() {
         return persons;
     }
 
-    public void setPersons(String persons) {
+    public void setPersons(ArrayList<Person> persons) {
         this.persons = persons;
     }
 
-    public String getEvents() {
+    public ArrayList<Event> getEvents() {
         return events;
     }
 
-    public void setEvents(String events) {
+    public void setEvents(ArrayList<Event> events) {
         this.events = events;
     }
 }

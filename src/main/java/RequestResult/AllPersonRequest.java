@@ -9,6 +9,7 @@ public class AllPersonRequest {
      */
     private String authToken;
 
+
     /**
      * Instantiates an AllPersonRequest with the given data of an authToken.
      *

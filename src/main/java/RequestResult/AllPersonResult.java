@@ -2,6 +2,8 @@ package RequestResult;
 
 import Models.Person;
 
+import java.util.ArrayList;
+
 /**
  * Stores the data for an HTTP result with all the Person data for the user.
  */
@@ -9,7 +11,7 @@ public class AllPersonResult {
     /**
      * Array of all the Person data
      */
-    private Person[] data;
+    private ArrayList<Person> data;
     /**
      * Whether the data access was successful
      */
@@ -25,10 +27,10 @@ public class AllPersonResult {
      * @param data all the person data for the user
      * @param success whether it was successful
      */
-    public AllPersonResult(Person[] data, boolean success){
-
+    public AllPersonResult(ArrayList<Person> data, boolean success, String message) {
         this.data = data;
         this.success = success;
+        this.message = message;
     }
 
     /**
@@ -42,12 +44,11 @@ public class AllPersonResult {
         this.message = message;
     }
 
-
-    public Person[] getData() {
+    public ArrayList<Person> getData() {
         return data;
     }
 
-    public void setData(Person[] data) {
+    public void setData(ArrayList<Person> data) {
         this.data = data;
     }
 

@@ -37,8 +37,6 @@ public class ClearService {
 
         } catch (Exception ex) {
             ex.printStackTrace();
-            // Close database connection, ROLLBACK transaction
-            // make and send back a failed login result object
             String errorMessage = "Error: " + ex.getMessage();
             ClearResult result = new ClearResult(errorMessage, false);
             return result;
@@ -50,4 +48,6 @@ public class ClearService {
             }
         }
     }
+
+
 }

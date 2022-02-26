@@ -54,8 +54,14 @@ public class Server {
         // forwards requests for /person/ to  PersonHandler for handling
         server.createContext("/person/", new PersonHandler());
 
+        // forwards requests for /person/ to  PersonHandler for handling
+        server.createContext("/person", new PersonHandler());
+
         // forwards requests for /event/ to EventHandler for handling
         server.createContext("/event/", new EventHandler());
+
+        // forwards requests for /event/ to EventHandler for handling
+        server.createContext("/event", new EventHandler());
 
         // Create and install the "default"/"file" handler, aka the "other" handler.
         server.createContext("/", new FileHandler());

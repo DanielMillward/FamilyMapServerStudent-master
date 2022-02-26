@@ -1,0 +1,81 @@
+{
+  "users":[
+    {
+      "username":"susan",
+      "password":"mysecret",
+      "email":"susan@gmail.com",
+      "firstName":"Susan",
+      "lastName":"Ellis",
+      "gender":"f",
+      "personID": "696969"
+    },
+    {
+      "username":"dave",
+      "password":"mysecrest",
+      "email":"dave@gmail.com",
+      "firstName":"Dave",
+      "lastName":"Smells",
+      "gender":"f",
+      "personID": "420420"
+    }
+
+  ],
+  "persons":[
+    {
+      "associatedUsername":"susan",
+      "personID":"7255e93e",
+      "firstName":"Stuart",
+      "lastName":"Klocke",
+      "gender":"m",
+      "fatherID": "7255e93e",
+      "motherID":"d3gz214j",
+      "spouseID":"f42126c8"
+    },
+    {
+      "associatedUsername":"susan",
+      "personID":"725asdfasdf",
+      "firstName":"Jeepers",
+      "lastName":"Kreepers",
+      "gender":"m",
+      "fatherID": "7255e93e",
+      "motherID":"d3gz214j",
+      "spouseID":"f42fd126c8"
+    },
+    {
+      "associatedUsername":"dave",
+      "personID":"7255dddde93e",
+      "firstName":"Drake",
+      "lastName":"Singer",
+      "gender":"m",
+      "fatherID": "725dd5e93e",
+      "motherID":"d3gzasdf214j",
+      "spouseID":"f42126fdc8"
+    }
+
+  ],
+  "events":[
+    {
+      "associatedUsername":"susan",
+      "eventID":"251837d7",
+      "personID":"7255e93e",
+      "latitude":65.6833,
+      "longitude":-17.9,
+      "country":"Iceland",
+      "city":"Akureyri",
+      "eventType":"birth",
+      "year":1912
+    },
+    {
+      "associatedUsername":"Dave",
+      "eventID":"251837d7666",
+      "personID":"7255dddde93e",
+      "latitude":65.6833,
+      "longitude":-17.9,
+      "country":"Iceland",
+      "city":"Akureyri",
+      "eventType":"birth",
+      "year":1969
+    }
+
+  ]
+}

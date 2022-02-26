@@ -16,7 +16,7 @@ public class PersonService {
      * @param r information about the request
      * @return a PersonResult object with data of the request (if successful)
      */
-    PersonResult person(PersonRequest r) {
+    public PersonResult person(PersonRequest r) {
         return null;
     }
 
@@ -26,7 +26,7 @@ public class PersonService {
      * @param r Information on the user for whom we're retrieving all the person objects
      * @return an AllPersonResult object with data of all the person requests (if successful)
      */
-    AllPersonResult AllPerson(AllPersonRequest r) {
+    public AllPersonResult AllPerson(AllPersonRequest r) {
         return null;
     }
 }

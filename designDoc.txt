@@ -2,6 +2,7 @@ General todo list:
 - when registering, differentiate between bad data and a user already registered
 - when adding people, if you randomly generate a name already in the database, deal with that
 - For logging incoming requests, make it actually readable (e.g. get rid of verbose errors?)
+- gracefully handle trying to put in repeating personID things and eventID things in their respective db's
 
 Implementation tips:
  - only the outermost service class gets and closes connections to a database

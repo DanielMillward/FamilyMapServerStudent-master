@@ -12,8 +12,7 @@ import com.sun.net.httpserver.HttpExchange;
 
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.util.Arrays;
-import java.util.Locale;
+import java.util.*;
 
 public class ParentHandler {
 
@@ -58,6 +57,23 @@ public class ParentHandler {
                         FillService fillservice = new FillService();
                         result = fillservice.fill(fillRequest);
                         break;
+                    case LOAD:
+                        LoadRequest loadRequest = (LoadRequest) gson.fromJson(reqData, LoadRequest.class);
+                        System.out.println(loadRequest.getUsers().get(0).getUsername());
+                        LoadService loadService = new LoadService();
+                        result = loadService.load(loadRequest);
+                        break;
+                    case PERSON:
+                        String reqPersonID = getPersonIDFromParameter(parameters);
+                        PersonService personService = new PersonService();
+                        if ( reqPersonID == null) {
+                            AllPersonRequest personRequest = getAllPersonRequestFromParams(reqHeaders);
+                            result = personService.AllPerson(personRequest);
+                        } else {
+                            PersonRequest singlePersonReq = getPersonRequestFromParams(reqHeaders, reqPersonID);
+                            result = personService.person(singlePersonReq);
+                        }
+                        break;
                 }
             } catch (UserAlreadyRegisteredException uare) {
                 uare.printStackTrace();
@@ -85,6 +101,46 @@ public class ParentHandler {
             exchange.getResponseBody().close();
         }
     }
+
+    private PersonRequest getPersonRequestFromParams(Headers requestHeaders, String personID) {
+        //Authorization
+        String authToken = null;
+        for (Map.Entry<String, List<String>> header : requestHeaders.entrySet()) {
+            if (Objects.equals(header.getKey(), "Authorization")) {
+                authToken = header.getValue().get(0);
+            }
+        }
+        if (authToken != null) {
+            return new PersonRequest(personID, authToken);
+        } else {
+            return null;
+        }
+    }
+
+    private AllPersonRequest getAllPersonRequestFromParams(Headers requestHeaders) {
+        //Authorization
+        String authToken = null;
+        for (Map.Entry<String, List<String>> header : requestHeaders.entrySet()) {
+            if (Objects.equals(header.getKey(), "Authorization")) {
+                authToken = header.getValue().get(0);
+            }
+        }
+        if (authToken != null) {
+            return new AllPersonRequest(authToken);
+        }
+        return null;
+    }
+
+    private String getPersonIDFromParameter(String parameters) {
+        String[] params = parameters.split("/");
+        // handles a string of fill/username/4 as well as just fill/username
+        if (params.length == 3) {
+            return params[2];
+        } else {
+            return null;
+        }
+    }
+
 
     private FillRequest getFillRequestFromParams(String parameters) {
         String[] params = parameters.split("/");
