@@ -18,20 +18,20 @@ public class FileHandler implements HttpHandler {
             if (exchange.getRequestMethod().toLowerCase().equals("get")) {
                 String urlPathTemp = exchange.getRequestURI().toString();
                 String urlPath = null;
-                System.out.println("urlPathTemp is " + urlPathTemp);
+                //System.out.println("urlPathTemp is " + urlPathTemp);
                 if (urlPathTemp == null || urlPathTemp.equals("/")){
                     urlPath = "/index.html";
                 } else {
                     urlPath = urlPathTemp;
                 }
-                System.out.println("urlPath is " + urlPath);
+                //System.out.println("urlPath is " + urlPath);
                 //get file path
                 String filePath = "web" + urlPath;
-                System.out.println("requested " + filePath);
+                //System.out.println("requested " + filePath);
                 File requestedFile = new File(filePath);
                 OutputStream respBody = exchange.getResponseBody();
                 if (requestedFile.exists()) {
-                    System.out.println("File exists");
+                    //System.out.println("File exists");
                     exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
                     Files.copy(requestedFile.toPath(), respBody);
                     respBody.close();

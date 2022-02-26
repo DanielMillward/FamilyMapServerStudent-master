@@ -9,6 +9,8 @@ import MyExceptions.DataAccessException;
 import RequestResult.LoginRequest;
 import RequestResult.LoginResult;
 
+import java.sql.Connection;
+
 /**
  * Handles the login of a user given a LoginRequest
  */
@@ -29,15 +31,16 @@ public class LoginService {
      */
     public LoginResult login(LoginRequest r){
         Database db= new Database();
+        boolean commit = false;
         try {
             // Checks if request has nonnull username and password
             if (r.getUsername() == null || r.getPassword() == null) {
                 throw new DataAccessException("Username or Password is null");
             }
             // Open database connection & make DAOs
-            db.openConnection();
-            UserDao userdata = new UserDao(db.getConnection());
-            AuthTokenDao authdata = new AuthTokenDao(db.getConnection());
+            Connection dbConnection = db.getConnection();
+            UserDao userdata = new UserDao(dbConnection);
+            AuthTokenDao authdata = new AuthTokenDao(dbConnection);
 
             // Sends request to DAO to try and get the relevant user
             User currUser = userdata.getUser(r.getUsername(), r.getPassword());
@@ -49,26 +52,25 @@ public class LoginService {
             String newAuthToken = currUser.getUsername() + System.currentTimeMillis();
             authdata.addAuthToken(new AuthToken(newAuthToken, currUser.getUsername()));
 
-            // Close database connection, COMMIT transaction
-            db.closeConnection(true);
 
             // Create and return SUCCESS Result object
             LoginResult result= new LoginResult(currUser.getUsername(), newAuthToken,
                     currUser.getPersonID(),true);
+            commit = true;
             return result;
 
         } catch (Exception ex) {
             ex.printStackTrace();
-            // Close database connection, ROLLBACK transaction
-            try {
-                db.closeConnection(false);
-            } catch (DataAccessException e) {
-                e.printStackTrace();
-            }
             // make and send back a failed login result object
             String errorMessage = "Error: " + ex.getMessage();
             LoginResult result = new LoginResult(errorMessage, false);
             return result;
+        } finally {
+            try {
+                db.closeConnection(commit);
+            } catch (DataAccessException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

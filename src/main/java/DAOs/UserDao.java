@@ -1,12 +1,11 @@
 package DAOs;
 
-import Models.Person;
 import Models.User;
 import MyExceptions.DataAccessException;
 import MyExceptions.InvalidInputException;
+import MyExceptions.UserAlreadyRegisteredException;
 
 import java.sql.*;
-import java.util.ArrayList;
 
 /**
  * Provides access to user related queries to the database, such as retrieving and creating users
@@ -69,6 +68,36 @@ public class UserDao {
         return null;
     }
 
+    public User getUserByUsername(String username) throws DataAccessException {
+        User currUser;
+        ResultSet rs = null;
+        String sql = "SELECT * FROM User WHERE username = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, username);
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                currUser = new User(rs.getString("username"),
+                        rs.getString("password"), rs.getString("email"),
+                        rs.getString("firstName"), rs.getString("lastName"),
+                        rs.getString("gender"), rs.getString("personID"));
+                return currUser;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DataAccessException("Error encountered while finding event");
+        } finally {
+            if(rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+        return null;
+    }
+
     /**
      * Adds a user to the database given all the information required
      *
@@ -76,13 +105,14 @@ public class UserDao {
      * @return the brand new User object added to the database
      * @throws DataAccessException if it encounters an error in adding the user to the database
      */
-    public User insertUser(User user) throws DataAccessException {
+    public User insertUser(User user) throws UserAlreadyRegisteredException {
         String sql = "INSERT INTO User (username, password, email, firstName, lastName, gender, personID) VALUES(?,?,?,?,?,?,?)";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             //Using the statements built-in set(type) functions we can pick the question mark we want
             //to fill in and give it a proper value. The first argument corresponds to the first
             //question mark found in our sql String
             stmt.setString(1, user.getUsername());
+            System.out.println("Recieved username was " + user.getUsername());
             stmt.setString(2, user.getPassword());
             stmt.setString(3, user.getEmail());
             stmt.setString(4, user.getFirstName());
@@ -91,7 +121,9 @@ public class UserDao {
             stmt.setString(7, user.getPersonID());
             stmt.executeUpdate();
         } catch (SQLException e) {
-            throw new DataAccessException("Error encountered while inserting into the database");
+            e.printStackTrace();
+            throw new UserAlreadyRegisteredException("Error encountered when trying to add you to the database. " +
+                    "Are you already registered? If so, log in.");
         }
         return null;
     }

@@ -13,7 +13,7 @@ public class Database {
 
     //Whenever we want to make a change to our database we will have to open a connection and use
     //Statements created by that connection to initiate transactions
-    public Connection openConnection() throws DataAccessException {
+    private Connection openConnection() throws DataAccessException {
         try {
             //The Structure for this Connection is driver:language:path
             //The path assumes you start in the root of your project unless given a non-relative path
@@ -72,7 +72,7 @@ public class Database {
             String sql = "DELETE FROM Events";
             stmt.executeUpdate(sql);
         } catch (SQLException e) {
-            throw new DataAccessException("SQL Error encountered while clearing tables");
+            throw new DataAccessException("SQL Error encountered while clearing Events");
         }
     }
 
@@ -82,7 +82,26 @@ public class Database {
             String sql = "DELETE FROM Person";
             stmt.executeUpdate(sql);
         } catch (SQLException e) {
-            throw new DataAccessException("SQL Error encountered while clearing tables");
+            throw new DataAccessException("SQL Error encountered while clearing Persons");
+        }
+    }
+
+    public void clearUserTable() throws DataAccessException {
+        try (Statement stmt = conn.createStatement()){
+            String sql = "DELETE FROM User";
+            stmt.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DataAccessException("SQL Error encountered while clearing Users");
+        }
+    }
+
+    public void clearAuthTokenTable() throws DataAccessException {
+        try (Statement stmt = conn.createStatement()){
+            String sql = "DELETE FROM Authtoken";
+            stmt.executeUpdate(sql);
+        } catch (SQLException e) {
+            throw new DataAccessException("SQL Error encountered while clearing Authtokens");
         }
     }
 }

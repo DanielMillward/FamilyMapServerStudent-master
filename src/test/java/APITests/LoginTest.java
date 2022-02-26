@@ -7,6 +7,7 @@ import MyExceptions.DataAccessException;
 import DAOs.Database;
 import DAOs.EventDao;
 import Models.Event;
+import MyExceptions.UserAlreadyRegisteredException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,7 +33,7 @@ public class LoginTest {
     private String baseUrlString;
 
     @BeforeEach
-    public void setUp() throws DataAccessException {
+    public void setUp() throws DataAccessException, UserAlreadyRegisteredException {
         //here we can set up any classes or variables we will need for the rest of our tests
         //lets create a new database
         db = new Database();

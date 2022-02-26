@@ -78,6 +78,7 @@ public class AuthTokenDao {
 
             stmt.executeUpdate();
         } catch (SQLException e) {
+            e.printStackTrace();
             System.out.println("authtoken SQL error " + e.getMessage());
             throw new DataAccessException("Error encountered while inserting into the database");
         }

@@ -49,6 +49,8 @@ public class Server {
         // forwards requests for /load to LoadHandler for handling
         server.createContext("/load", new LoadHandler());
 
+        server.createContext("/clear", new ClearHandler());
+
         // forwards requests for /person/ to  PersonHandler for handling
         server.createContext("/person/", new PersonHandler());
 

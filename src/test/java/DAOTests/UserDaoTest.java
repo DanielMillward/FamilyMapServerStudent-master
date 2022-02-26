@@ -6,6 +6,7 @@ import Models.Person;
 import Models.User;
 import MyExceptions.DataAccessException;
 import Models.Event;
+import MyExceptions.UserAlreadyRegisteredException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -45,7 +46,7 @@ public class UserDaoTest {
     }
 
     @Test
-    public void insertUserPass() throws DataAccessException {
+    public void insertUserPass() throws DataAccessException, UserAlreadyRegisteredException {
         //Insert a user
         uDao.insertUser(bestUser);
         //Get the user we just inserted
@@ -57,7 +58,7 @@ public class UserDaoTest {
     }
 
     @Test
-    public void insertUserFail() throws DataAccessException {
+    public void insertUserFail() throws DataAccessException, UserAlreadyRegisteredException {
         // test the insert to the user db
         uDao.insertUser(bestUser);
         //Make sure that trying to insert an identical user throws a dataAccessException
@@ -65,7 +66,7 @@ public class UserDaoTest {
     }
 
     @Test
-    public void retrievalPass() throws DataAccessException {
+    public void retrievalPass() throws DataAccessException, UserAlreadyRegisteredException {
         //add something to database
         uDao.insertUser(bestUser);
 
@@ -87,7 +88,7 @@ public class UserDaoTest {
     }
 
     @Test
-    public void retrievalFail() throws DataAccessException {
+    public void retrievalFail() throws DataAccessException, UserAlreadyRegisteredException {
         //try to get something after inserting nothing beforehand
         assertNull(uDao.getUser(bestUser.getUsername(), bestUser.getPassword()));
         //try to get something after giving a wrong username
@@ -100,7 +101,7 @@ public class UserDaoTest {
     }
 
     @Test
-    public void clearPass() throws DataAccessException {
+    public void clearPass() throws DataAccessException, UserAlreadyRegisteredException {
         //clear the User table
         uDao.insertUser(bestUser);
         uDao.clearUsers();

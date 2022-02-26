@@ -1,19 +1,18 @@
 package Services;
 
 import DAOs.*;
+import LocalJSONObjects.Location;
+import LocalJSONObjects.LocationList;
+import LocalJSONObjects.NamesList;
 import Models.*;
 import MyExceptions.DataAccessException;
-import RequestResult.LoginResult;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Connection;
 import java.util.Random;
 
 import static Services.TreeGeneration.Genders.FEMALE;
@@ -21,25 +20,24 @@ import static Services.TreeGeneration.Genders.MALE;
 
 public class TreeGeneration {
 
-    Person generateTree(String gender, int generations, String username, String firstName, String lastName, int birthYear) throws FileNotFoundException {
+    Person generateTree(String gender, int generations, String username, String firstName, String lastName, int birthYear, String userPersonID, Connection conn) throws FileNotFoundException {
         /*
         Generate mother and father (if necessary)
          */
         FullPerson userMother = null;
         FullPerson userFather = null;
         if (generations >= 1) {
-            userMother = generatePerson(FEMALE, generations, username, birthYear);
-            userFather = generatePerson(MALE, generations, username, birthYear);
+            userMother = generatePerson(FEMALE, generations, username, birthYear, conn);
+            userFather = generatePerson(MALE, generations, username, birthYear, conn);
             // Set mother's and father's spouse IDs
-            setSpouseIDInDatabase(userMother, userFather);
+            setSpouseIDInDatabase(userMother, userFather, conn);
             //calls saveEventInDB, also generates the year
-            addMarriageEventInDatabase(birthYear, userMother, userFather, username);
+            addMarriageEventInDatabase(birthYear, userMother, userFather, username, conn);
         }
 
         /*
         make details of current person
          */
-        String userPersonID = getNewPersonID(firstName, lastName);
         String fatherID;
         String motherID;
         if (userFather == null || userMother == null) {
@@ -53,12 +51,78 @@ public class TreeGeneration {
                 gender, fatherID, motherID, null);
         // Generate birth event for user
         Event userBirth = getNewEventObject("birth", username, userPersonID, birthYear);
-        // Save person in database
-        saveEventInDB(userBirth);
+        // Save birth in database
+        saveEventInDB(userBirth, conn);
+        // save person in database
+        savePersonInDB(person, conn);
         return person;
     }
 
-    private void addMarriageEventInDatabase(int birthYear, FullPerson userMother, FullPerson userFather, String username) {
+    FullPerson generatePerson(Genders gender, int generations, String username, int childBirthYear, Connection conn) {
+        FullPerson mother = null;
+        FullPerson father = null;
+        int personBirthYear = generateBirthYear(gender, childBirthYear);
+        if (generations > 1) {
+            mother = generatePerson(FEMALE, generations -1, username, personBirthYear, conn);
+            father = generatePerson(MALE, generations -1, username, personBirthYear, conn);
+
+            // Set mother's and father's spouse IDs
+            setSpouseIDInDatabase(mother, father, conn);
+            //calls saveEventInDB, also generates the year
+            addMarriageEventInDatabase(personBirthYear, mother, father, username, conn);
+        }
+
+        //make details of current person
+        int personDeathYear = generateDeathYear(childBirthYear, personBirthYear);
+        String personFirstName = getRandomFirstName(gender);
+        String personLastName = getRandomLastName();
+        String newPersonID = getNewPersonID(personFirstName, personLastName);
+        String newFatherID;
+        String newMotherID;
+        if (father == null || mother == null) {
+            newFatherID = null;
+            newMotherID = null;
+        } else {
+            newFatherID = father.getPerson().getPersonID();
+            newMotherID = mother.getPerson().getPersonID();
+        }
+        String personGender;
+        if (gender == MALE) {
+            personGender = "m";
+        }  else {
+            personGender = "f";
+        }
+        Person person= new Person(newPersonID, username, personFirstName, personLastName,
+                personGender, newFatherID, newMotherID, null);
+        //Save birth in database
+        Event birthEvent = getNewEventObject("birth", username, newPersonID, personBirthYear);
+        saveEventInDB(birthEvent, conn);
+        //save death in database
+        Event deathEvent = getNewEventObject("death", username, newPersonID, personDeathYear);
+        saveEventInDB(deathEvent, conn);
+        // Save person in database
+        savePersonInDB(person, conn);
+
+        return new FullPerson(person, personBirthYear, personDeathYear);
+    }
+
+    private void savePersonInDB(Person person, Connection conn) {
+        boolean commit = false;
+        try {
+            // Open database connection & make DAOs
+            PersonDao pDao = new PersonDao(conn);
+            // Insert event into database
+            pDao.insert(person);
+            // Close database connection, COMMIT transaction
+            commit = true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            // Close database connection, ROLLBACK transaction
+
+        }
+    }
+
+    private void addMarriageEventInDatabase(int birthYear, FullPerson userMother, FullPerson userFather, String username, Connection conn) {
         //must be 13 years after mother or father birth
         int secondOldYear = userMother.getBirthYear() + 13;
         int firstOldYear = userFather.getBirthYear() + 13;
@@ -85,95 +149,43 @@ public class TreeGeneration {
                 userMother.getPerson().getPersonID(), marriageYear);
         Event fatherMarriageEvent = getNewEventObject("marriage", username,
                 userFather.getPerson().getPersonID(), marriageYear);
-        saveEventInDB(motherMarriageEvent);
-        saveEventInDB(fatherMarriageEvent);
+        saveEventInDB(motherMarriageEvent, conn);
+        saveEventInDB(fatherMarriageEvent, conn);
     }
 
-    private void setSpouseIDInDatabase(FullPerson userMother, FullPerson userFather) {
-        Database db= new Database();
+    private void setSpouseIDInDatabase(FullPerson userMother, FullPerson userFather, Connection conn) {
+        boolean commit = false;
         try {
             // Open database connection & make DAOs
-            db.openConnection();
-            PersonDao pDao = new PersonDao(db.getConnection());
+            PersonDao pDao = new PersonDao(conn);
             // Insert event into database
             pDao.setSpouseID(userMother.getPerson().getPersonID(), userFather.getPerson().getPersonID());
             pDao.setSpouseID(userFather.getPerson().getPersonID(), userMother.getPerson().getPersonID());
             // Close database connection, COMMIT transaction
-            db.closeConnection(true);
+            commit = true;
         } catch (Exception ex) {
             ex.printStackTrace();
             // Close database connection, ROLLBACK transaction
-            try {
-                db.closeConnection(false);
-            } catch (DataAccessException e) {
-                e.printStackTrace();
-            }
+
         }
     }
 
-    private void saveEventInDB(Event event) {
-        Database db= new Database();
+    private void saveEventInDB(Event event, Connection conn) {
+        boolean commit = false;
         try {
             // Open database connection & make DAOs
-            db.openConnection();
-            EventDao eDao = new EventDao(db.getConnection());
+            EventDao eDao = new EventDao(conn);
             // Insert event into database
             eDao.insert(event);
-            // Close database connection, COMMIT transaction
-            db.closeConnection(true);
+            commit = true;
         } catch (Exception ex) {
             ex.printStackTrace();
             // Close database connection, ROLLBACK transaction
-            try {
-                db.closeConnection(false);
-            } catch (DataAccessException e) {
-                e.printStackTrace();
-            }
         }
     }
 
 
-    FullPerson generatePerson(Genders gender, int generations, String username, int childBirthYear) {
-        FullPerson mother = null;
-        FullPerson father = null;
-        int personBirthYear = generateBirthYear(gender, childBirthYear);
-        if (generations > 1) {
-            mother = generatePerson(FEMALE, generations -1, username, personBirthYear);
-            father = generatePerson(MALE, generations -1, username, personBirthYear);
 
-            mother = generatePerson(FEMALE, generations, username, personBirthYear);
-            father = generatePerson(MALE, generations, username, personBirthYear);
-            // Set mother's and father's spouse IDs
-            setSpouseIDInDatabase(mother, father);
-            //calls saveEventInDB, also generates the year
-            addMarriageEventInDatabase(personBirthYear, mother, father, username);
-        }
-
-        //make details of current person
-        int personDeathYear = generateDeathYear(childBirthYear, personBirthYear);
-        String personFirstName = getRandomFirstName(gender);
-        String personLastName = getRandomLastName();
-        String newPersonID = getNewPersonID(personFirstName, personLastName);
-        String newFatherID;
-        String newMotherID;
-        if (father == null || mother == null) {
-            newFatherID = null;
-            newMotherID = null;
-        } else {
-            newFatherID = father.getPerson().getPersonID();
-            newMotherID = mother.getPerson().getPersonID();
-        }
-        String personGender;
-        if (gender == MALE) {
-            personGender = "m";
-        }  else {
-            personGender = "f";
-        }
-        Person person= new Person(newPersonID, username, personFirstName, personLastName,
-                personGender, newFatherID, newMotherID, null);
-        // Save person in database
-        return new FullPerson(person, personBirthYear, personDeathYear);
-    }
 
     private int generateDeathYear(int childBirthYear, int personBirthYear) {
         Random r = new Random();
@@ -207,16 +219,22 @@ public class TreeGeneration {
     private String getRandomFirstName(Genders gender) {
         try {
             // create Gson instance
+            // create Gson instance
             Gson gson = new Gson();
             // create a reader
             Reader fnamesreader = Files.newBufferedReader(Paths.get("json/fnames.json"));
             Reader mnamesreader = Files.newBufferedReader(Paths.get("json/mnames.json"));
-            // convert JSON array to list of users - TEST THIS!!!!!!
-            String[] fdata = gson.fromJson(fnamesreader, String[].class);
-            String[] mdata = gson.fromJson(mnamesreader, String[].class);
+            //System.out.println(fnamesreader);
+            // convert JSON array to list of users - TEST THIS!!!!!
+            NamesList fdataObj = gson.fromJson(fnamesreader, NamesList.class);
+            NamesList mdataObj = gson.fromJson(mnamesreader, NamesList.class);
+
+            String[] fdata = fdataObj.getList().toArray(new String[0]);
+            String[] mdata = mdataObj.getList().toArray(new String[0]);
+            //String[] mdata = gson.fromJson(mnamesreader, String[].class);
             // close reader
             fnamesreader.close();
-            mnamesreader.close();;
+            mnamesreader.close();
             Random r = new Random();
 
             if (gender == FEMALE) {
@@ -235,14 +253,16 @@ public class TreeGeneration {
             // create Gson instance
             Gson gson = new Gson();
             // create a reader
-            Reader reader = Files.newBufferedReader(Paths.get("json/snames.json"));
-            // convert JSON array to list of users - TEST THIS!!!!!!
-            String[] data = gson.fromJson(reader, String[].class);
+            Reader snamesreader = Files.newBufferedReader(Paths.get("json/snames.json"));
+            // convert JSON array to list of users - TEST THIS!!!!!
+            NamesList sdataObj = gson.fromJson(snamesreader, NamesList.class);
+
+            String[] sdata = sdataObj.getList().toArray(new String[0]);
             // close reader
-            reader.close();
+            snamesreader.close();
             Random r = new Random();
 
-            return data[r.nextInt(data.length)];
+            return sdata[r.nextInt(sdata.length)];
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -256,12 +276,13 @@ public class TreeGeneration {
             // create a reader
             Reader reader = Files.newBufferedReader(Paths.get("json/locations.json"));
             // convert JSON array to list of users - TEST THIS!!!!!!
-            Location[] data = gson.fromJson(reader, Location[].class);
+            LocationList ldataObj = gson.fromJson(reader, LocationList.class);
+            Location[] ldata = ldataObj.getList().toArray(new Location[0]);
             // close reader
             reader.close();
             Random r = new Random();
 
-            return data[r.nextInt(data.length)];
+            return ldata[r.nextInt(ldata.length)];
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -274,7 +295,7 @@ public class TreeGeneration {
         return eventType + userPersonID + Integer.toString(lastDigits);
     }
 
-    private String getNewPersonID(String firstName, String lastName) {
+    public String getNewPersonID(String firstName, String lastName) {
         long randNum = System.currentTimeMillis();
         int lastDigits = (int) (randNum % 100000);
         return firstName + lastName + Integer.toString(lastDigits);

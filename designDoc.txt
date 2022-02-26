@@ -1,3 +1,15 @@
+General todo list:
+- when registering, differentiate between bad data and a user already registered
+- when adding people, if you randomly generate a name already in the database, deal with that
+- For logging incoming requests, make it actually readable (e.g. get rid of verbose errors?)
+
+Implementation tips:
+ - only the outermost service class gets and closes connections to a database
+    - pass in a connection to inner classes/DAOs
+ - only the outermost service class instantiates a database object
+
+
+
 Server class extends HttpServer
 - deal with bind, start/stop, executor, context
 - Looks at the incoming request (how?) and depending on what it is, calls the function of the
@@ -26,10 +38,12 @@ Steps:
     - TODO: put the start/end bits not in switch in their own functions?
 3. Write the parent handler class
 4. Figure out what methods should be in interface(s)/parents/helpers for service classes
-    - fill/register making tree logic
+    - fill/register making tree logic DONE
 5. write the interface(s) class(es)
     - fill/register logic, slide 14: https://byu.app.box.com/s/aw4ivqkwswa2blcm46sqrckng9psiul4
+
 6. Write the actual handlers/services one action set at a time
+ - on this step! maybe start with register, using TreeGeneration's, then thoroughly test/debug from there
 
 
 

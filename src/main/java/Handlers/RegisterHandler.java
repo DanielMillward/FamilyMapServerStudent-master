@@ -25,6 +25,7 @@ public class RegisterHandler extends ParentHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         try {
+            System.out.println("Register being called...");
             parentHandle(exchange, "post", ReqResType.REGISTER);
         }
         catch (IOException e) {
