@@ -28,3 +28,27 @@ Feb 26, 2022 2:49:00 PM Logger.MyLogger log
 INFO: Recieved Registration Request
 Feb 26, 2022 2:49:00 PM Logger.MyLogger log
 INFO: Registered user username
+Feb 28, 2022 3:43:44 PM Logger.MyLogger log
+INFO: Initializing Server
+Feb 28, 2022 3:43:44 PM Logger.MyLogger log
+INFO: Server Started
+Feb 28, 2022 3:56:50 PM Logger.MyLogger log
+INFO: Initializing Server
+Feb 28, 2022 3:56:51 PM Logger.MyLogger log
+INFO: Server Started
+Feb 28, 2022 4:13:57 PM Logger.MyLogger log
+INFO: Initializing Server
+Feb 28, 2022 4:13:58 PM Logger.MyLogger log
+INFO: Server Started
+Feb 28, 2022 4:17:27 PM Logger.MyLogger log
+INFO: Initializing Server
+Feb 28, 2022 4:17:27 PM Logger.MyLogger log
+INFO: Server Started
+Feb 28, 2022 4:18:17 PM Logger.MyLogger log
+INFO: Initializing Server
+Feb 28, 2022 4:18:17 PM Logger.MyLogger log
+INFO: Server Started
+Feb 28, 2022 4:29:25 PM Logger.MyLogger log
+INFO: Initializing Server
+Feb 28, 2022 4:29:25 PM Logger.MyLogger log
+INFO: Server Started

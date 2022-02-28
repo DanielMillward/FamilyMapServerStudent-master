@@ -38,6 +38,10 @@ public class UserDao {
      * @throws DataAccessException if it encounters an error retrieving the user.
      */
     public User getUser(String username, String password) throws DataAccessException {
+        if (username == null || password == null) {
+            throw new DataAccessException("Incomplete login data given");
+        }
+
         User currUser;
         ResultSet rs = null;
         String sql = "SELECT * FROM User WHERE username = ? AND password = ?;";
@@ -51,6 +55,8 @@ public class UserDao {
                         rs.getString("firstName"), rs.getString("lastName"),
                         rs.getString("gender"), rs.getString("personID"));
                 return currUser;
+            } else {
+                throw new DataAccessException("No user found with given credentials");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -65,7 +71,6 @@ public class UserDao {
             }
 
         }
-        return null;
     }
 
     public User getUserByUsername(String username) throws DataAccessException {
@@ -81,6 +86,8 @@ public class UserDao {
                         rs.getString("firstName"), rs.getString("lastName"),
                         rs.getString("gender"), rs.getString("personID"));
                 return currUser;
+            } else {
+                throw new DataAccessException("No user found with given username");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -95,7 +102,6 @@ public class UserDao {
             }
 
         }
-        return null;
     }
 
     /**
@@ -105,8 +111,15 @@ public class UserDao {
      * @return the brand new User object added to the database
      * @throws DataAccessException if it encounters an error in adding the user to the database
      */
-    public User insertUser(User user) throws UserAlreadyRegisteredException {
+    public User insertUser(User user) throws UserAlreadyRegisteredException, DataAccessException {
         String sql = "INSERT INTO User (username, password, email, firstName, lastName, gender, personID) VALUES(?,?,?,?,?,?,?)";
+        if (user == null) {
+            throw new DataAccessException("User is null");
+        }
+        if (user.getUsername() == null || user.getPassword() == null ||user.getEmail() == null ||user.getFirstName() == null ||user.getLastName() == null ||user.getGender() == null ||user.getPersonID() == null) {
+            throw new DataAccessException("Incomplete data for user given");
+        }
+
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             //Using the statements built-in set(type) functions we can pick the question mark we want
             //to fill in and give it a proper value. The first argument corresponds to the first

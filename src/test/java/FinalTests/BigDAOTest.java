@@ -53,7 +53,9 @@ public class BigDAOTest {
 
         //test persons
         firstPerson = new Person("Person_num_1", "ElonMusk", "Elon",
-                "Musk", "f", "dad_12", "mom_34","spouse_78");
+                "Musk", "m", "dad_12", "mom_34","spouse_78");
+        secondPerson = new Person("Person_num_2", "ElonMusk", "Amelia",
+                "Airheart", "f", "air_dad1", "air_mom2","spouse_66");
 
         //test events
         firstEvent = new Event("Biking_123A", "ElonMusk", "Person_num_1",
@@ -159,93 +161,214 @@ public class BigDAOTest {
     }
 
     @Test
-    public void getEventsPass() {
+    public void getEventsPass() throws DataAccessException {
+        //add something to database & a logged in user
+        eDao.insert(firstEvent);
+        aDao.addAuthToken(userToken);
 
+        //check if retrieval matches for one case with different authTokens maybe
+        Event compareTest = eDao.getEvents(userToken.getAuthtoken(), firstEvent.getEventID()).get(0);
+        assertNotNull(compareTest);
+        assertEquals(firstEvent, compareTest);
     }
 
     @Test
-    public void getEventsFail() {
+    public void getEventsFail() throws DataAccessException {
+        //try retrieving on an empty db and no login
+        assertThrows(DataAccessException.class, () -> eDao.getEvents("blahblah", firstEvent.getEventID()));
 
+        //not present in db, logged in
+        aDao.addAuthToken(userToken);
+        assertThrows(DataAccessException.class, () -> eDao.getEvents(userToken.getAuthtoken(), firstEvent.getEventID()));
+
+        //in DB, not logged in
+        db.clearAuthTokenTable();
+        assertThrows(DataAccessException.class, () -> eDao.getEvents(userToken.getAuthtoken(), firstEvent.getEventID()));
     }
 
     @Test
-    public void personInsertPass() {
-
+    public void personInsertPass() throws DataAccessException {
+        // Getting events
+        pDao.insert(firstPerson);
+        pDao.insert(secondPerson);
+        aDao.addAuthToken(userToken);
+        ArrayList<Person> compareTest = pDao.getPersons(userToken.getAuthtoken(), null);
+        assertNotNull(compareTest);
+        ArrayList<Person> realPersons = new ArrayList<>();
+        realPersons.add(firstPerson);
+        realPersons.add(secondPerson);
+        assertEquals(realPersons, compareTest);
     }
 
     @Test
-    public void personInsertFail() {
+    public void personInsertFail() throws DataAccessException {
+        //Null and incomplete ones given
+        Person nullPerson = new Person(null,null, null,
+                null, null, null, null,null);
+        Person incompletePerson = new Person(firstPerson.getPersonID(),null, "Bastion",
+                null, "f", null, "OrisaOnline",null);
+        assertThrows(DataAccessException.class, () -> pDao.insert(null));
+        assertThrows(DataAccessException.class, () -> pDao.insert(nullPerson));
+        assertThrows(DataAccessException.class, () -> pDao.insert(incompletePerson));
 
+        //exact same event given
+        pDao.insert(firstPerson);
+        assertThrows(DataAccessException.class, () -> pDao.insert(firstPerson));
     }
 
     @Test
-    public void getPersonsPass() {
+    public void getPersonsPass() throws DataAccessException {
+        //add something to database & a logged in user
+        pDao.insert(firstPerson);
+        aDao.addAuthToken(userToken);
 
+        //check if retrieval matches for one case with different authTokens maybe
+        Person compareTest = pDao.getPersons(userToken.getAuthtoken(), firstPerson.getPersonID()).get(0);
+        assertNotNull(compareTest);
+        assertEquals(firstPerson, compareTest);
     }
 
     @Test
-    public void getPersonsFail() {
+    public void getPersonsFail() throws DataAccessException {
+        //try retrieving on an empty db and no login
+        assertThrows(DataAccessException.class, () -> pDao.getPersons(userToken.getAuthtoken(), firstPerson.getPersonID()));
 
+        //not present in db, logged in
+        aDao.addAuthToken(userToken);
+        assertThrows(DataAccessException.class, () -> pDao.getPersons(userToken.getAuthtoken(), firstPerson.getPersonID()));
+
+        //in DB, not logged in
+        db.clearAuthTokenTable();
+        assertThrows(DataAccessException.class, () -> pDao.getPersons(userToken.getAuthtoken(), firstPerson.getPersonID()));
     }
 
     @Test
-    public void clearPersonsPass() {
+    public void clearPersonsPass() throws DataAccessException {
+        //clear the person table
+        pDao.insert(firstPerson);
+        pDao.clearPersons();
 
+        //try to access something (should throw DataAccessException)
+        aDao.addAuthToken(userToken);
+        assertThrows(DataAccessException.class, () -> pDao.getPersons(userToken.getAuthtoken(), null));
     }
 
     @Test
-    public void clearPersonsFail() {
-
+    public void clearPersonsPassTwo() throws DataAccessException {
+        //clear without data in it
+        pDao.clearPersons();
+        //try to access something (should throw DataAccessException)
+        aDao.addAuthToken(userToken);
+        assertThrows(DataAccessException.class, () -> pDao.getPersons(userToken.getAuthtoken(), null));
     }
 
     @Test
-    public void setSpouseIDPass() {
+    public void setSpouseIDPass() throws DataAccessException {
+        //add person, set its spouse, get it and check spouseID
+        pDao.insert(firstPerson);
+        pDao.setSpouseID(firstPerson.getPersonID(), "testSpouseID");
 
+        aDao.addAuthToken(userToken);
+        Person compareTest = pDao.getPersons(userToken.getAuthtoken(), firstPerson.getPersonID()).get(0);
+
+        assertEquals("testSpouseID", compareTest.getSpouseID());
     }
 
     @Test
-    public void setSpouseIDFail() {
+    public void setSpouseIDFail() throws DataAccessException {
+        //no personID given
+        assertThrows(DataAccessException.class, () -> pDao.setSpouseID(null, "TestSpouseID"));
 
+        //no spouseID given
+        aDao.addAuthToken(userToken);
+        assertThrows(DataAccessException.class, () -> pDao.setSpouseID(firstPerson.getPersonID(), null));
     }
 
     @Test
-    public void getUserPass() {
+    public void getUserPass() throws UserAlreadyRegisteredException, DataAccessException {
+        //add something to database
+        uDao.insertUser(testUser);
 
+        //check if retrieval matches for one case with different authTokens maybe
+        User compareTest = uDao.getUser(testUser.getUsername(), testUser.getPassword());
+        assertNotNull(compareTest);
+        assertEquals(testUser, compareTest);
     }
 
     @Test
-    public void getUserFail() {
+    public void getUserFail() throws DataAccessException {
+        //try retrieving on an empty db and no login
+        assertThrows(DataAccessException.class, () -> uDao.getUser(testUser.getUsername(), testUser.getPassword()));
 
+        //not present in db, logged in
+        aDao.addAuthToken(userToken);
+        assertThrows(DataAccessException.class, () -> uDao.getUser(testUser.getUsername(), testUser.getPassword()));
     }
 
     @Test
-    public void getUserByUsernamePass() {
+    public void getUserByUsernamePass() throws UserAlreadyRegisteredException, DataAccessException {
+        //add something to database
+        uDao.insertUser(testUser);
 
+        //check if retrieval matches for one case with different authTokens maybe
+        User compareTest = uDao.getUserByUsername(testUser.getUsername());
+        assertNotNull(compareTest);
+        assertEquals(testUser, compareTest);
     }
 
     @Test
-    public void getUserByUsernameFail() {
+    public void getUserByUsernameFail() throws DataAccessException {
+        //try retrieving on an empty db and no login
+        assertThrows(DataAccessException.class, () -> uDao.getUserByUsername(testUser.getUsername()));
 
+        //not present in db, logged in
+        aDao.addAuthToken(userToken);
+        assertThrows(DataAccessException.class, () -> uDao.getUserByUsername(testUser.getUsername()));
     }
 
     @Test
-    public void insertUserPass() {
+    public void insertUserPass() throws UserAlreadyRegisteredException, DataAccessException {
+        uDao.insertUser(testUser);
+        User compareTest = uDao.getUser(testUser.getUsername(), testUser.getPassword());
 
+        assertNotNull(compareTest);
+        assertEquals(testUser, compareTest);
     }
 
     @Test
-    public void insertUserFail() {
+    public void insertUserFail() throws UserAlreadyRegisteredException, DataAccessException {
+        //test users
+        User nullUser = new User(null, null, null,
+                null, null, null, null);
+        User incompleteUser = new User("someUsername", null, "spam@gmail.com",
+                null, "HogRider", null, null);
+        assertThrows(DataAccessException.class, () -> uDao.insertUser(null));
+        assertThrows(DataAccessException.class, () -> uDao.insertUser(nullUser));
+        assertThrows(DataAccessException.class, () -> uDao.insertUser(incompleteUser));
 
+        //exact same event given
+        uDao.insertUser(testUser);
+        assertThrows(UserAlreadyRegisteredException.class, () -> uDao.insertUser(testUser));
     }
 
     @Test
-    public void clearUsersPass() {
+    public void clearUsersPass() throws UserAlreadyRegisteredException, DataAccessException {
+        //clear the person table
+        uDao.insertUser(testUser);
+        uDao.clearUsers();
 
+        //try to access something (should throw DataAccessException)
+        aDao.addAuthToken(userToken);
+        assertThrows(DataAccessException.class, () -> uDao.getUserByUsername(testUser.getUsername()));
     }
 
     @Test
-    public void clearUsersFail() {
-
+    public void clearUsersPassTwo() throws DataAccessException {
+        //clear without data in it
+        uDao.clearUsers();
+        //try to access something (should throw DataAccessException)
+        aDao.addAuthToken(userToken);
+        assertThrows(DataAccessException.class, () -> uDao.getUserByUsername(testUser.getUsername()));
     }
 
 }

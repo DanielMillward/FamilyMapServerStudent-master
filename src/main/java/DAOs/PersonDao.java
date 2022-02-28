@@ -34,6 +34,12 @@ public class PersonDao {
 
         String sql = "INSERT INTO Person (personID, associatedUsername, firstName, lastName, gender, " +
                 "fatherID, motherID, spouseID) VALUES(?,?,?,?,?,?,?,?)";
+        if (person == null) {
+            throw new DataAccessException("Person is null");
+        }
+        if (person.getPersonID() == null || person.getAssociatedUsername() == null ||person.getFirstName() == null ||person.getLastName() == null ||person.getGender() == null ) {
+            throw new DataAccessException("Incomplete data given");
+        }
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             //Using the statements built-in set(type) functions we can pick the question mark we want
             //to fill in and give it a proper value. The first argument corresponds to the first
@@ -202,6 +208,9 @@ public class PersonDao {
 
     public void setSpouseID(String personID, String spouseID) throws DataAccessException {
         String sql = "UPDATE Person SET spouseID=? WHERE personID=?;";
+        if (personID == null || spouseID == null) {
+            throw new DataAccessException("Incomplete data given to set SpouseID");
+        }
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             //Using the statements built-in set(type) functions we can pick the question mark we want
             //to fill in and give it a proper value. The first argument corresponds to the first
