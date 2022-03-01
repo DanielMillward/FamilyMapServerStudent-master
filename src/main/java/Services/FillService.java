@@ -5,6 +5,7 @@ import DAOs.PersonDao;
 import DAOs.UserDao;
 import Models.User;
 import MyExceptions.DataAccessException;
+import MyExceptions.InvalidInputException;
 import RequestResult.*;
 
 import java.sql.Connection;
@@ -20,13 +21,17 @@ public class FillService {
      * @param r FillRequest with the information on who/what to fill data for
      * @return The result of the operation in the form of a FillResult
      */
-    public FillResult fill(FillRequest r) {
+    public FillResult fill(FillRequest r) throws InvalidInputException, DataAccessException {
         /*
         if username is null, send a failed fillresult
          */
         if (r.getUsername() == null) {
-            return new FillResult("Error with Fill Request", false);
+            throw new InvalidInputException("Username and/or number of generations not given for fill request");
         }
+        if (r.getNumGens() < 0) {
+            throw new InvalidInputException("Number of generations given is less than 0");
+        }
+
         /*
         if numgens is negative, then do default of 4 gens, else do whatever it is
          */
@@ -59,7 +64,10 @@ public class FillService {
             System.out.println("numGens is " + numGens + " numpeople is " + numPersonsAdded + " num events is " + numEventsAdded);
             return new FillResult("Successfully added " + numPersonsAdded + " persons and " + numEventsAdded + " events to the database.", true);
 
-        } catch (Exception ex) { //issue adding stuff or logging them in
+        } catch (DataAccessException dae) {
+            throw new DataAccessException("Error accessing requested data");
+        }
+        catch (Exception ex) { //issue adding stuff or logging them in
             ex.printStackTrace();
             // Close database connection, ROLLBACK transaction
             try {

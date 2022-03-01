@@ -30,25 +30,29 @@ public class LoginService {
      * @param r Information about the user to login in the form of a LoginRequest
      * @return The result of the operation in the form of a LoginResult
      */
-    public LoginResult login(LoginRequest r) throws InvalidInputException{
+    public LoginResult login(LoginRequest r) throws InvalidInputException, DataAccessException{
         Database db= new Database();
         boolean commit = false;
+        if (r.getUsername() == null || r.getPassword() == null) {
+            throw new DataAccessException("Username or Password is null");
+        }
         try {
             // Checks if request has nonnull username and password
-            if (r.getUsername() == null || r.getPassword() == null) {
-                throw new DataAccessException("Username or Password is null");
-            }
+
             // Open database connection & make DAOs
             Connection dbConnection = db.getConnection();
             UserDao userdata = new UserDao(dbConnection);
             AuthTokenDao authdata = new AuthTokenDao(dbConnection);
 
+            System.out.println("Login request for user " + r.getUsername() + " and password " + r.getPassword());
             // Sends request to DAO to try and get the relevant user
             User currUser = userdata.getUser(r.getUsername(), r.getPassword());
             // make sure user was not null
             if (currUser == null) {
                 System.out.println("Got an incorrect login");
                 throw new InvalidInputException();
+            } else {
+                System.out.println("Got a successful login of user " + currUser.getUsername() + " " + currUser.getPassword());
             }
             // User exists, so then have the authtoken DAO make a new row
             String newAuthToken = currUser.getUsername() + System.currentTimeMillis();
@@ -65,12 +69,10 @@ public class LoginService {
             System.out.println("Rethrowing invalid input error");
             throw new InvalidInputException();
         }
-        catch (Exception ex) {
+        catch (DataAccessException ex) {
             ex.printStackTrace();
             // make and send back a failed login result object
-            String errorMessage = "Error: " + ex.getMessage();
-            LoginResult result = new LoginResult(errorMessage, false);
-            return result;
+            throw new DataAccessException("Failed to login: " + ex.getMessage());
         } finally {
             try {
                 db.closeConnection(commit);

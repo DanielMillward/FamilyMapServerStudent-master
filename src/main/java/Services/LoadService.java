@@ -23,7 +23,7 @@ public class LoadService {
      * @param r LoadRequest object with the information on who/what to load data for
      * @return The result of the operation in the form of a LoadResult
      */
-    public LoadResult load(LoadRequest r) {
+    public LoadResult load(LoadRequest r) throws DataAccessException {
 
         /*
         First we clear the database
@@ -61,17 +61,19 @@ public class LoadService {
             int latest = 0;
             Connection daoConnection = db.getConnection();
             UserDao uDao = new UserDao(daoConnection);
-            for (int i = 0; i < r.getUsers().size(); ++i) {
-                try {
-                    System.out.println("Trying to insert  "+ r.getUsers().get(i).getUsername());
-                    uDao.insertUser(r.getUsers().get(i));
+            if (r.getUsers() != null) {
+                for (int i = 0; i < r.getUsers().size(); ++i) {
+                    try {
+                        System.out.println("Trying to insert  "+ r.getUsers().get(i).getUsername());
+                        uDao.insertUser(r.getUsers().get(i));
 
-                    latest = i;
+                        latest = i;
 
-                } catch (UserAlreadyRegisteredException e) {
-                    e.printStackTrace();
-                    System.out.println("Had a repeating username???? "+ r.getUsers().get(i).getUsername());
-                    success = false;
+                    } catch (UserAlreadyRegisteredException e) {
+                        e.printStackTrace();
+                        System.out.println("Had a repeating username???? "+ r.getUsers().get(i).getUsername());
+                        success = false;
+                    }
                 }
             }
             if (!success) {
@@ -80,22 +82,38 @@ public class LoadService {
 
             // getting the Person DAO and calling insertPerson enough times
             PersonDao pDao = new PersonDao(daoConnection);
-            for (int i = 0; i < r.getPersons().size(); ++i) {
-                pDao.insert(r.getPersons().get(i));
+            if (r.getPersons() != null) {
+                for (int i = 0; i < r.getPersons().size(); ++i) {
+                    pDao.insert(r.getPersons().get(i));
+                }
             }
 
             // getting the Event DAO and calling insertEvent enough times
             EventDao eDao = new EventDao(daoConnection);
-            for (int i = 0; i < r.getEvents().size(); ++i) {
-                eDao.insert(r.getEvents().get(i));
+            if (r.getEvents() != null) {
+                for (int i = 0; i < r.getEvents().size(); ++i) {
+                    eDao.insert(r.getEvents().get(i));
+                }
             }
 
             //loading was successful!
             shouldCommit = true;
-            return new LoadResult("Successfully added " + r.getUsers().size() + " users, " + r.getPersons().size() + " persons, and " + r.getEvents().size() + " events to the database.", true);
+            int usersSize = 0;
+            int peopleSize = 0;
+            int eventsSize = 0;
+            if (r.getUsers() != null) {
+                usersSize = r.getUsers().size();
+            }
+            if (r.getPersons() != null) {
+                peopleSize = r.getPersons().size();
+            }
+            if (r.getEvents() != null) {
+                eventsSize = r.getEvents().size();
+            }
+            return new LoadResult("Successfully added " + usersSize + " users, " + peopleSize + " persons, and " + eventsSize + " events to the database.", true);
         } catch (DataAccessException e) {
             e.printStackTrace();
-            return new LoadResult("Error: Accessing database failed for some reason", false);
+            throw new DataAccessException("Failed to add the given data to the database");
         } finally {
             try {
                 db.closeConnection(shouldCommit);

@@ -25,7 +25,7 @@ public class EventService {
     public EventResult event(EventRequest r) throws DataAccessException {
         //make sure both values aren't null, if so throw an error result
         if (r.getEventID() == null || r.getAuthToken() == null) {
-            return new EventResult("Error: AuthToken or EventID is null", false);
+            throw new DataAccessException("Incomplete Event Requests details given");
         }
         //make persondao, get it
         Database db = new Database();

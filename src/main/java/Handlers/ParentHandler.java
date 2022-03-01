@@ -97,6 +97,7 @@ public class ParentHandler {
                 sendBadResponse("Error: User already registered", exchange, gson);
                 return;
             } catch (DataAccessException dae) {
+                System.out.println("Realized we got a dataacess thing");
                 MyLogger.log(Level.INFO, "Got DataAccessError: " + dae.getMessage());
                 sendBadResponse("Error: " + dae.getMessage(), exchange, gson);
                 return;

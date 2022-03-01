@@ -4,6 +4,7 @@ import DAOs.Database;
 import DAOs.PersonDao;
 import Models.Person;
 import MyExceptions.DataAccessException;
+import MyExceptions.InvalidInputException;
 import RequestResult.AllPersonRequest;
 import RequestResult.AllPersonResult;
 import RequestResult.PersonRequest;
@@ -23,10 +24,10 @@ public class PersonService {
      * @param r information about the request
      * @return a PersonResult object with data of the request (if successful)
      */
-    public PersonResult person(PersonRequest r) throws DataAccessException {
+    public PersonResult person(PersonRequest r) throws DataAccessException, InvalidInputException {
         //make sure both values aren't null, if so throw an error result
         if (r.getPersonID() == null || r.getAuthToken() == null) {
-            return new PersonResult(false, "Error: AuthToken or PersonID is null");
+            throw new InvalidInputException();
         }
         //make persondao, get it
         Database db = new Database();

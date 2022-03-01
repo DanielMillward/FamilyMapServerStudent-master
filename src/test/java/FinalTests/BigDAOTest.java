@@ -11,16 +11,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.sql.Connection;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BigDAOTest {
     private Database db;
@@ -29,7 +23,6 @@ public class BigDAOTest {
 
     private Event firstEvent;
     private Event secondEvent;
-    private Event thirdEvent;
 
     private Person firstPerson;
     private Person secondPerson;

@@ -48,12 +48,12 @@ public class RegisterService {
 
         try {
             // Open database connection & make DAOs
-            System.out.println("registering user...");
+            //System.out.println("registering user...");
             UserDao uDao = new UserDao(dbConnection);
-            System.out.println("made udao...");
+            //System.out.println("made udao...");
             //insert new User
             User userInDB = uDao.insertUser(newUser);
-            System.out.println("inserted user...");
+            //System.out.println("inserted user...");
             // Close database connection, COMMIT transaction
             System.out.println("should have got a good user...");
             db.closeConnection(true);
