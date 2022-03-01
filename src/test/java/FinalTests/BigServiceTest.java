@@ -324,15 +324,23 @@ public class BigServiceTest {
     }
 
     @Test
-    public void allPersonPass() {
-        //add 2 people for user
-
+    public void allPersonPass() throws DataAccessException, UserAlreadyRegisteredException, InvalidInputException {
+        //add two persons
+        loadService.load(loadPersonsRequest);
+        //login
+        rService.register(firstRegisterRequest);
+        LoginResult lResult =  loginService.login(firstLoginRequest);
+        //see if retrieval gets ball events (keeping in mind the default # of events generated is 91)
+        AllPersonRequest allPersonRequest = new AllPersonRequest(lResult.getAuthtoken());
+        ArrayList<Person> compareTest = pService.AllPerson(allPersonRequest).getData();
+        assertNotNull(compareTest);
+        assertEquals(31 + 2, compareTest.size());
     }
 
     @Test
     public void allPersonFail() {
-        //invalid auth token
-        //invalid
+        //no auth token and no event
+        assertThrows(DataAccessException.class, () -> pService.AllPerson(new AllPersonRequest("RandomAuthToken")));
     }
 
 }
