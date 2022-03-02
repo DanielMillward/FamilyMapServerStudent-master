@@ -126,6 +126,32 @@ public class BigServiceTest {
     }
 
     @Test
+    public void loadPass() throws InvalidInputException, DataAccessException {
+        //check for success message
+        loadService.load(loadRequest);
+        LoginResult lResult =  loginService.login(firstLoginRequest);
+        assertNotNull(lResult);
+        LoginResult lResultTwo = loginService.login(secondLoginRequest);
+        assertNotNull(lResult);
+        AllEventResult allEventResult = eService.AllEvent(new AllEventRequest(lResult.getAuthtoken()));
+        assertNotNull(allEventResult);
+        AllPersonResult allPersonRequest = pService.AllPerson(new AllPersonRequest(lResult.getAuthtoken()));
+        assertNotNull(allPersonRequest);
+    }
+
+    @Test
+    public void loadFail() {
+        //missing/incomplete values
+        ArrayList<Event> eventArrayList = new ArrayList<>();
+        eventArrayList.add(firstEvent);
+        Event incompleteEvent = new Event(null, null, "something", 0,0,"Canada", "Toronto", "birth", 2019);
+        eventArrayList.add(incompleteEvent);
+
+        LoadRequest badLoadRequest = new LoadRequest(null, null, eventArrayList);
+        assertThrows(DataAccessException.class,() -> loadService.load(badLoadRequest));
+    }
+
+    @Test
     public void clearPass() throws DataAccessException, UserAlreadyRegisteredException, InvalidInputException {
         rService.register(firstRegisterRequest);
 
@@ -242,36 +268,10 @@ public class BigServiceTest {
         loadService.load(loadUsersRequest);
         assertThrows(DataAccessException.class, () -> fService.fill(new FillRequest("IncorrectUsername", 2)));
 
-
         //invalid gens parameter (negative)
         assertThrows(InvalidInputException.class, () -> fService.fill(new FillRequest("ElonMusk", -9)));
     }
 
-    @Test
-    public void loadPass() throws InvalidInputException, DataAccessException {
-        //check for success message
-        loadService.load(loadRequest);
-        LoginResult lResult =  loginService.login(firstLoginRequest);
-        assertNotNull(lResult);
-        LoginResult lResultTwo = loginService.login(secondLoginRequest);
-        assertNotNull(lResult);
-        AllEventResult allEventResult = eService.AllEvent(new AllEventRequest(lResult.getAuthtoken()));
-        assertNotNull(allEventResult);
-        AllPersonResult allPersonRequest = pService.AllPerson(new AllPersonRequest(lResult.getAuthtoken()));
-        assertNotNull(allPersonRequest);
-    }
-
-    @Test
-    public void loadFail() {
-        //missing/incomplete values
-        ArrayList<Event> eventArrayList = new ArrayList<>();
-        eventArrayList.add(firstEvent);
-        Event incompleteEvent = new Event(null, null, "something", 0,0,"Canada", "Toronto", "birth", 2019);
-        eventArrayList.add(incompleteEvent);
-
-        LoadRequest badLoadRequest = new LoadRequest(null, null, eventArrayList);
-        assertThrows(DataAccessException.class,() -> loadService.load(badLoadRequest));
-    }
 
     @Test
     public void loginPass() throws DataAccessException, InvalidInputException {

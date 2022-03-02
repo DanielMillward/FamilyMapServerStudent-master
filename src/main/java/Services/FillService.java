@@ -45,6 +45,7 @@ public class FillService {
         Fill it up!
          */
         Database db = new Database();
+        boolean commit = false;
         try {
             // Open database connection & make DAOs
             Connection dbConnection = db.getConnection();
@@ -58,7 +59,7 @@ public class FillService {
                     user.getLastName(), 2000, user.getPersonID(), dbConnection);
 
             // Close database connection, COMMIT transaction
-            db.closeConnection(true);
+            commit = true;
             int numPersonsAdded = getNumPersonsByGen(numGens);
             int numEventsAdded = getNumEventsByGen(numGens);
             System.out.println("numGens is " + numGens + " numpeople is " + numPersonsAdded + " num events is " + numEventsAdded);
@@ -70,12 +71,14 @@ public class FillService {
         catch (Exception ex) { //issue adding stuff or logging them in
             ex.printStackTrace();
             // Close database connection, ROLLBACK transaction
+
+            return new FillResult("Error: " + ex.getMessage(), false);
+        } finally {
             try {
-                db.closeConnection(false);
+                db.closeConnection(commit);
             } catch (DataAccessException e) {
                 e.printStackTrace();
             }
-            return new FillResult("Error: " + ex.getMessage(), false);
         }
 
     }

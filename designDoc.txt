@@ -1,14 +1,13 @@
-General todo list:
-- For logging incoming requests, make it actually readable (e.g. get rid of verbose errors?)
-- gracefully handle trying to put in repeating personID things and eventID things in their respective db's
-- rewrite personDao
- - in parenthandler, combine helper functions for people/event
-- combine eventservice and personservice functions, maybe into one each? into one big parent function
-- maybe not even parent, just a thing it has
+General todo list (probably run test before/after any biggish changes:
+- rewrite personDao/eventDao
+getPersons should just be if (null) getUsername(); getEvents(single=false); else getUsername(); getEvents(true);
 - make sure the error handling and messages look nice and mesh well together
-- make success/message order consistent everywhere
-- turn println into logs or delete entirely
- - take authtoken handling out of person/event daos into its own thing
+- delete unnecessary/unused classes
+- put first and last bits in parentHandler into own functions
+- go through services/parent handler and comment nicely
+
+
+
 
 Implementation tips:
  - only the outermost service class gets and closes connections to a database

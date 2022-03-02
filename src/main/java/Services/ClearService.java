@@ -25,7 +25,6 @@ public class ClearService {
         boolean commit = false;
         try {
             // Open database connection
-            db.getConnection();
             //clear everything
             db.clearUserTable();
             db.clearAuthTokenTable();

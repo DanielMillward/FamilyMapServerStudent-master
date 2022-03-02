@@ -68,7 +68,7 @@ public class Database {
 
     public void clearEventTable() throws DataAccessException
     {
-        try (Statement stmt = conn.createStatement()){
+        try (Statement stmt = getConnection().createStatement()){
             String sql = "DELETE FROM Events";
             stmt.executeUpdate(sql);
         } catch (SQLException e) {
@@ -78,7 +78,7 @@ public class Database {
 
     public void clearPersonTable() throws DataAccessException
     {
-        try (Statement stmt = conn.createStatement()){
+        try (Statement stmt = getConnection().createStatement()){
             String sql = "DELETE FROM Person";
             stmt.executeUpdate(sql);
         } catch (SQLException e) {
@@ -87,7 +87,7 @@ public class Database {
     }
 
     public void clearUserTable() throws DataAccessException {
-        try (Statement stmt = conn.createStatement()){
+        try (Statement stmt = getConnection().createStatement()){
             String sql = "DELETE FROM User";
             stmt.executeUpdate(sql);
         } catch (SQLException e) {
@@ -97,7 +97,7 @@ public class Database {
     }
 
     public void clearAuthTokenTable() throws DataAccessException {
-        try (Statement stmt = conn.createStatement()){
+        try (Statement stmt = getConnection().createStatement()){
             String sql = "DELETE FROM Authtoken";
             stmt.executeUpdate(sql);
         } catch (SQLException e) {
