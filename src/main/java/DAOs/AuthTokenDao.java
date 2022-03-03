@@ -39,6 +39,7 @@ public class AuthTokenDao {
         AuthToken output;
         ResultSet rs = null;
         String sql = "SELECT * FROM Authtoken WHERE authtoken = ?;";
+        //Make sure we have the authtoken
         if (authToken == null || authToken.equals("")) {
             throw new DataAccessException("No authToken given");
         }
@@ -46,6 +47,7 @@ public class AuthTokenDao {
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, authToken);
             rs = stmt.executeQuery();
+            //If we found something, return AuthToken object otherwise DataAccessexception
             if (rs.next()) {
                 output = new AuthToken(rs.getString("authtoken"), rs.getString("username"));
                 return output;
@@ -77,6 +79,7 @@ public class AuthTokenDao {
      */
     public void addAuthToken(AuthToken authtoken) throws DataAccessException {
         String sql = "INSERT INTO Authtoken (authtoken, username) VALUES(?,?)";
+        //Making sure we have all data
         if (authtoken.getUsername() == null || authtoken.getAuthtoken() == null) {
             throw new DataAccessException("No username or authtoken given");
         }
@@ -87,7 +90,7 @@ public class AuthTokenDao {
 
             stmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             MyLogger.log(Level.INFO, "Authtoken error: " + e.getMessage());
             throw new DataAccessException("Error encountered while inserting into the database");
         }

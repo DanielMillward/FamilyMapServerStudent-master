@@ -70,7 +70,7 @@ public class LoginService {
             throw new InvalidInputException();
         }
         catch (DataAccessException ex) {
-            ex.printStackTrace();
+            //ex.printStackTrace();
             // make and send back a failed login result object
             throw new DataAccessException("Failed to login: " + ex.getMessage());
         } finally {

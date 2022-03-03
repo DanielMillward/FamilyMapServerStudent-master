@@ -59,7 +59,7 @@ public class UserDao {
                 throw new DataAccessException("No user found with given credentials");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             throw new DataAccessException("Error encountered while finding event");
         } finally {
             if(rs != null) {
@@ -73,6 +73,13 @@ public class UserDao {
         }
     }
 
+    /**
+     * Gets a User object with just the username
+     *
+     * @param username username of user we want to get the object of
+     * @return User object of requested user
+     * @throws DataAccessException can't find user or had an error
+     */
     public User getUserByUsername(String username) throws DataAccessException {
         User currUser;
         ResultSet rs = null;
@@ -125,7 +132,6 @@ public class UserDao {
             //to fill in and give it a proper value. The first argument corresponds to the first
             //question mark found in our sql String
             stmt.setString(1, user.getUsername());
-            System.out.println("Recieved username was " + user.getUsername());
             stmt.setString(2, user.getPassword());
             stmt.setString(3, user.getEmail());
             stmt.setString(4, user.getFirstName());
@@ -134,7 +140,7 @@ public class UserDao {
             stmt.setString(7, user.getPersonID());
             stmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             throw new UserAlreadyRegisteredException("Error encountered when trying to add you to the database. " +
                     "Are you already registered? If so, log in.");
         }
@@ -150,17 +156,5 @@ public class UserDao {
         }
     }
 
-    /**
-     * Creates a family tree for a given user and number of generations
-     *
-     * @param username username of the corresponding user
-     * @param numGens number of generations to create for the user
-     * @return whether the operation was successful
-     * @throws InvalidInputException missing or invalid parameters
-     * @throws SQLException if encounters an error in adding it to the table
-     */
-    boolean fillUser(String username, int numGens) throws InvalidInputException, SQLException {
-        return false;
-    }
 }
 

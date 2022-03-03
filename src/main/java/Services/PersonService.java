@@ -42,7 +42,7 @@ public class PersonService {
             return new PersonResult(person.getAssociatedUsername(), person.getPersonID(), person.getFirstName(),
                     person.getLastName(), person.getGender(), person.getFatherID(), person.getMotherID(), true);
         } catch (DataAccessException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             throw new DataAccessException(e.getMessage());
         } finally {
             try {

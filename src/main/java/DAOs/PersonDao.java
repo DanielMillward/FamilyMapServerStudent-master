@@ -1,6 +1,6 @@
 package DAOs;
 
-import Models.Event;
+import DAOs.HelperClasses.AuthFromUsername;
 import Models.Person;
 import MyExceptions.DataAccessException;
 import MyExceptions.InvalidAuthTokenException;
@@ -34,6 +34,7 @@ public class PersonDao {
 
         String sql = "INSERT INTO Person (personID, associatedUsername, firstName, lastName, gender, " +
                 "fatherID, motherID, spouseID) VALUES(?,?,?,?,?,?,?,?)";
+        //Catching null values
         if (person == null) {
             throw new DataAccessException("Person is null");
         }
@@ -41,9 +42,7 @@ public class PersonDao {
             throw new DataAccessException("Incomplete data given");
         }
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            //Using the statements built-in set(type) functions we can pick the question mark we want
-            //to fill in and give it a proper value. The first argument corresponds to the first
-            //question mark found in our sql String
+            //Replacing question marks with data
             stmt.setString(1, person.getPersonID());
             stmt.setString(2, person.getAssociatedUsername());
             stmt.setString(3, person.getFirstName());
@@ -55,7 +54,7 @@ public class PersonDao {
 
             stmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             throw new DataAccessException("Error encountered while inserting into the database");
         }
     }
@@ -72,12 +71,15 @@ public class PersonDao {
      */
     public ArrayList<Person> getPersons(String authToken, String personID) throws DataAccessException {
         ArrayList<Person> persons = new ArrayList<>();
-        String currUser = getUsernameFromAuthToken(authToken);
+        //Getting username from authToken row
+        AuthFromUsername afu = new AuthFromUsername();
+        String currUser = afu.getUsernameFromAuthToken(authToken,conn);
+        //Case 1: Looking for specific Person
         if (personID != null && authToken != null) {
             persons = getPersonsWithUsername(currUser, personID, true);
             return persons;
+        //Case 2: Want all the persons
         } else if (authToken != null) {
-            System.out.println("Getting for username " + currUser);
             persons = getPersonsWithUsername(currUser, personID, false);
             return persons;
         } else {
@@ -89,6 +91,7 @@ public class PersonDao {
         ResultSet rs = null;
         ArrayList<Person> output = new ArrayList<>();
         String sql;
+        //Setting SQL statement based on whether want just one or many people
         if (isSingle) {
             sql = "SELECT * FROM Person WHERE associatedUsername = ? AND personID = ?;";
         } else {
@@ -100,8 +103,8 @@ public class PersonDao {
                 stmt.setString(2, personID);
             }
             rs = stmt.executeQuery();
+            //Just inserting one Person if given PersonID
             if (isSingle) {
-                System.out.println("Got request for a single thing");
                 if (rs.next()) {
                     output.add(new Person(rs.getString("personID"), rs.getString("associatedUsername"),
                             rs.getString("firstName"), rs.getString("lastName"), rs.getString("gender"),
@@ -110,6 +113,7 @@ public class PersonDao {
                 } else {
                     throw new DataAccessException("No person found for given PersonID and AuthToken");
                 }
+            //Inserting all Persons
             } else {
                 boolean foundSomething = false;
 
@@ -126,10 +130,10 @@ public class PersonDao {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             throw new DataAccessException("Error encountered while finding event");
         } catch (DataAccessException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             throw new DataAccessException(e.getMessage());
         } finally {
             if(rs != null) {
@@ -141,42 +145,6 @@ public class PersonDao {
             }
 
         }
-    }
-
-    private String getUsernameFromAuthToken(String authToken) throws DataAccessException {
-        ResultSet rs = null;
-        String usersql = "SELECT * FROM AuthToken WHERE authtoken = ?;";
-        String currUser = new String();
-
-        try (PreparedStatement stmt = conn.prepareStatement(usersql)) {
-            stmt.setString(1, authToken);
-            rs = stmt.executeQuery();
-            //found a username authtoken row
-            if (rs.next()) {
-                currUser = rs.getString("username");
-            } else {
-                throw new InvalidAuthTokenException();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new DataAccessException("Error: problem encountered when inserting into database");
-        } catch (InvalidAuthTokenException e) {
-            e.printStackTrace();
-            throw new DataAccessException("Error: Incorrect Auth Token");
-        } finally {
-            if(rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-
-        }
-        if (currUser == null) {
-            throw new DataAccessException("No user found for given authToken");
-        }
-        return currUser;
     }
 
     public void clearPersons() throws DataAccessException{
@@ -194,15 +162,13 @@ public class PersonDao {
             throw new DataAccessException("Incomplete data given to set SpouseID");
         }
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            //Using the statements built-in set(type) functions we can pick the question mark we want
-            //to fill in and give it a proper value. The first argument corresponds to the first
-            //question mark found in our sql String
+            //Replace question marks with data
             stmt.setString(1, spouseID);
             stmt.setString(2, personID);
 
             stmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+           // e.printStackTrace();
             throw new DataAccessException("Error encountered while inserting into the database");
         }
     }

@@ -40,7 +40,7 @@ public class EventService {
                                    event.getCountry(), event.getCity(), event.getEventType(), event.getLatitude(),
                                    event.getLongitude(), event.getYear(), true);
         } catch (DataAccessException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             throw new DataAccessException(e.getMessage());
         } finally {
             try {

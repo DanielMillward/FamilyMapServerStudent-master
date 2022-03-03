@@ -2432,3 +2432,919 @@ Mar 02, 2022 11:17:17 AM Logger.MyLogger log
 INFO: Initializing Server
 Mar 02, 2022 11:17:17 AM Logger.MyLogger log
 INFO: Server Started
+Mar 02, 2022 10:50:01 PM Logger.MyLogger log
+INFO: Initializing Server
+Mar 02, 2022 10:50:01 PM Logger.MyLogger log
+INFO: Server Started
+Mar 02, 2022 10:50:25 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 10:50:25 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 10:50:25 PM Logger.MyLogger log
+INFO: Recieved Load Request
+Mar 02, 2022 10:50:25 PM Logger.MyLogger log
+INFO: Loaded data into database successfully
+Mar 02, 2022 10:50:27 PM Logger.MyLogger log
+INFO: Recieved Login Request
+Mar 02, 2022 10:50:27 PM Logger.MyLogger log
+INFO: Logged in user sheila
+Mar 02, 2022 10:50:27 PM Logger.MyLogger log
+INFO: Recieved Event Request
+Mar 02, 2022 10:50:27 PM Logger.MyLogger log
+INFO: Retrieved all Event objects for user with authToken sheila1646286627230
+Mar 02, 2022 10:50:27 PM Logger.MyLogger log
+INFO: Recieved Person Request
+Mar 02, 2022 10:50:27 PM Logger.MyLogger log
+INFO: Retrieved all Person objects for user with authToken sheila1646286627230
+Mar 02, 2022 10:50:27 PM Logger.MyLogger log
+INFO: Recieved Login Request
+Mar 02, 2022 10:50:27 PM Logger.MyLogger log
+INFO: Logged in user patrick
+Mar 02, 2022 10:50:27 PM Logger.MyLogger log
+INFO: Recieved Event Request
+Mar 02, 2022 10:50:27 PM Logger.MyLogger log
+INFO: Retrieved all Event objects for user with authToken patrick1646286627278
+Mar 02, 2022 10:50:27 PM Logger.MyLogger log
+INFO: Recieved Person Request
+Mar 02, 2022 10:50:27 PM Logger.MyLogger log
+INFO: Retrieved all Person objects for user with authToken patrick1646286627278
+Mar 02, 2022 10:50:27 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 10:50:27 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 10:50:27 PM Logger.MyLogger log
+INFO: Recieved File Request
+Mar 02, 2022 10:50:27 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 10:50:27 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 10:50:27 PM Logger.MyLogger log
+INFO: Recieved Registration Request
+Mar 02, 2022 10:50:27 PM Logger.MyLogger log
+INFO: Registered user sheila
+Mar 02, 2022 10:50:27 PM Logger.MyLogger log
+INFO: Recieved Person Request
+Mar 02, 2022 10:50:27 PM Logger.MyLogger log
+INFO: Retrieved all Person objects for user with authToken sheila1646286627670
+Mar 02, 2022 10:50:27 PM Logger.MyLogger log
+INFO: Recieved Event Request
+Mar 02, 2022 10:50:27 PM Logger.MyLogger log
+INFO: Retrieved all Event objects for user with authToken sheila1646286627670
+Mar 02, 2022 10:50:27 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 10:50:27 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 10:50:27 PM Logger.MyLogger log
+INFO: Recieved Registration Request
+Mar 02, 2022 10:50:27 PM Logger.MyLogger log
+INFO: Registered user sheila
+Mar 02, 2022 10:50:27 PM Logger.MyLogger log
+INFO: Recieved Login Request
+Mar 02, 2022 10:50:27 PM Logger.MyLogger log
+INFO: Got DataAccessError: Failed to login: No user found with given credentials
+Mar 02, 2022 10:50:27 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 10:50:27 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 10:50:27 PM Logger.MyLogger log
+INFO: Recieved Load Request
+Mar 02, 2022 10:50:27 PM Logger.MyLogger log
+INFO: Loaded data into database successfully
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Recieved Login Request
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Logged in user sheila
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Recieved Event Request
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Retrieved all Event objects for user with authToken sheila1646286628010
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Recieved Person Request
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Retrieved all Person objects for user with authToken sheila1646286628010
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Recieved Login Request
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Logged in user patrick
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Recieved Event Request
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Retrieved all Event objects for user with authToken patrick1646286628048
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Recieved Person Request
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Retrieved all Person objects for user with authToken patrick1646286628048
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Recieved Registration Request
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Registered user sheila
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Recieved Person Request
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Retrieved all Person objects for user with authToken sheila1646286628349
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Recieved Registration Request
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Registered user sheila
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Recieved Login Request
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Got DataAccessError: Failed to login: No user found with given credentials
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Recieved Registration Request
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Registered user sheila
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Recieved Event Request
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Got DataAccessError: Error: Incorrect Auth Token
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Recieved Load Request
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Loaded data into database successfully
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Recieved Login Request
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Logged in user sheila
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Recieved Login Request
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Got DataAccessError: Failed to login: No user found with given credentials
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Recieved Login Request
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Got DataAccessError: Failed to login: No user found with given credentials
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Recieved Person Request
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Got DataAccessError: Error: Incorrect Auth Token
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Recieved Event Request
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Got DataAccessError: Error: Incorrect Auth Token
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Recieved Load Request
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Loaded data into database successfully
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Recieved Event Request
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Got DataAccessError: Error: Incorrect Auth Token
+Mar 02, 2022 10:50:28 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 10:50:29 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 10:50:29 PM Logger.MyLogger log
+INFO: Recieved Registration Request
+Mar 02, 2022 10:50:29 PM Logger.MyLogger log
+INFO: Registered user sheila
+Mar 02, 2022 10:50:29 PM Logger.MyLogger log
+INFO: Recieved Person Request
+Mar 02, 2022 10:50:29 PM Logger.MyLogger log
+INFO: Retrieved all Person objects for user with authToken sheila1646286629200
+Mar 02, 2022 10:50:29 PM Logger.MyLogger log
+INFO: Recieved Event Request
+Mar 02, 2022 10:50:29 PM Logger.MyLogger log
+INFO: Retrieved all Event objects for user with authToken sheila1646286629200
+Mar 02, 2022 10:50:29 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 10:50:29 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 10:50:29 PM Logger.MyLogger log
+INFO: Recieved Load Request
+Mar 02, 2022 10:50:29 PM Logger.MyLogger log
+INFO: Loaded data into database successfully
+Mar 02, 2022 10:50:29 PM Logger.MyLogger log
+INFO: Recieved Login Request
+Mar 02, 2022 10:50:29 PM Logger.MyLogger log
+INFO: Logged in user sheila
+Mar 02, 2022 10:50:29 PM Logger.MyLogger log
+INFO: Recieved Person Request
+Mar 02, 2022 10:50:29 PM Logger.MyLogger log
+INFO: Got DataAccessError: No person found for given PersonID and AuthToken
+Mar 02, 2022 10:50:29 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 10:50:29 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 10:50:29 PM Logger.MyLogger log
+INFO: Recieved Registration Request
+Mar 02, 2022 10:50:29 PM Logger.MyLogger log
+INFO: Registered user sheila
+Mar 02, 2022 10:50:29 PM Logger.MyLogger log
+INFO: Recieved Person Request
+Mar 02, 2022 10:50:29 PM Logger.MyLogger log
+INFO: Got DataAccessError: Error: Incorrect Auth Token
+Mar 02, 2022 10:50:29 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 10:50:29 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 10:50:29 PM Logger.MyLogger log
+INFO: Recieved Load Request
+Mar 02, 2022 10:50:29 PM Logger.MyLogger log
+INFO: Loaded data into database successfully
+Mar 02, 2022 10:50:29 PM Logger.MyLogger log
+INFO: Recieved Login Request
+Mar 02, 2022 10:50:29 PM Logger.MyLogger log
+INFO: Logged in user sheila
+Mar 02, 2022 10:50:29 PM Logger.MyLogger log
+INFO: Recieved Event Request
+Mar 02, 2022 10:50:29 PM Logger.MyLogger log
+INFO: Retrieved Person object with ID Sheila_Asteroids for user with authToken sheila1646286629555
+Mar 02, 2022 10:50:29 PM Logger.MyLogger log
+INFO: Recieved Event Request
+Mar 02, 2022 10:50:29 PM Logger.MyLogger log
+INFO: Retrieved Person object with ID Other_Asteroids for user with authToken sheila1646286629555
+Mar 02, 2022 10:50:29 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 10:50:29 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 10:50:29 PM Logger.MyLogger log
+INFO: Recieved Registration Request
+Mar 02, 2022 10:50:29 PM Logger.MyLogger log
+INFO: Registered user sheila
+Mar 02, 2022 10:50:29 PM Logger.MyLogger log
+INFO: Recieved Fill Request
+Mar 02, 2022 10:50:29 PM Logger.MyLogger log
+INFO: Filled database for user sheila
+Mar 02, 2022 10:50:29 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 10:50:29 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 10:50:29 PM Logger.MyLogger log
+INFO: Recieved Registration Request
+Mar 02, 2022 10:50:30 PM Logger.MyLogger log
+INFO: Registered user sheila
+Mar 02, 2022 10:50:30 PM Logger.MyLogger log
+INFO: Recieved Fill Request
+Mar 02, 2022 10:50:30 PM Logger.MyLogger log
+INFO: Filled database for user sheila
+Mar 02, 2022 10:50:30 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 10:50:30 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 10:50:30 PM Logger.MyLogger log
+INFO: Recieved Registration Request
+Mar 02, 2022 10:50:30 PM Logger.MyLogger log
+INFO: Registered user sheila
+Mar 02, 2022 10:50:30 PM Logger.MyLogger log
+INFO: Recieved Fill Request
+Mar 02, 2022 10:50:30 PM Logger.MyLogger log
+INFO: Filled database for user sheila
+Mar 02, 2022 10:50:30 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 10:50:30 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 10:50:30 PM Logger.MyLogger log
+INFO: Recieved Registration Request
+Mar 02, 2022 10:50:30 PM Logger.MyLogger log
+INFO: Registered user sheila
+Mar 02, 2022 10:50:30 PM Logger.MyLogger log
+INFO: Recieved Person Request
+Mar 02, 2022 10:50:30 PM Logger.MyLogger log
+INFO: Retrieved all Person objects for user with authToken sheila1646286630791
+Mar 02, 2022 10:50:30 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 10:50:30 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 10:50:30 PM Logger.MyLogger log
+INFO: Recieved Registration Request
+Mar 02, 2022 10:50:31 PM Logger.MyLogger log
+INFO: Registered user sheila
+Mar 02, 2022 10:50:31 PM Logger.MyLogger log
+INFO: Recieved Load Request
+Mar 02, 2022 10:50:31 PM Logger.MyLogger log
+INFO: Loaded data into database successfully
+Mar 02, 2022 10:50:31 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 10:50:31 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 10:50:31 PM Logger.MyLogger log
+INFO: Recieved Registration Request
+Mar 02, 2022 10:50:31 PM Logger.MyLogger log
+INFO: Registered user sheila
+Mar 02, 2022 10:50:31 PM Logger.MyLogger log
+INFO: Recieved Registration Request
+Mar 02, 2022 10:50:31 PM Logger.MyLogger log
+INFO: Failed to register user already in database: null
+Mar 02, 2022 10:50:31 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 10:50:31 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 10:50:31 PM Logger.MyLogger log
+INFO: Recieved Load Request
+Mar 02, 2022 10:50:31 PM Logger.MyLogger log
+INFO: Loaded data into database successfully
+Mar 02, 2022 10:50:31 PM Logger.MyLogger log
+INFO: Recieved Login Request
+Mar 02, 2022 10:50:31 PM Logger.MyLogger log
+INFO: Logged in user patrick
+Mar 02, 2022 10:50:31 PM Logger.MyLogger log
+INFO: Recieved Event Request
+Mar 02, 2022 10:50:31 PM Logger.MyLogger log
+INFO: Got DataAccessError: No event found for this eventID and authToken username
+Mar 02, 2022 10:50:31 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 10:50:31 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 10:50:31 PM Logger.MyLogger log
+INFO: Recieved Registration Request
+Mar 02, 2022 10:50:31 PM Logger.MyLogger log
+INFO: Registered user sheila
+Mar 02, 2022 10:50:31 PM Logger.MyLogger log
+INFO: Recieved Person Request
+Mar 02, 2022 10:50:31 PM Logger.MyLogger log
+INFO: Retrieved all Person objects for user with authToken sheila1646286631454
+Mar 02, 2022 10:50:31 PM Logger.MyLogger log
+INFO: Recieved Event Request
+Mar 02, 2022 10:50:31 PM Logger.MyLogger log
+INFO: Retrieved all Event objects for user with authToken sheila1646286631454
+Mar 02, 2022 10:50:31 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 10:50:31 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 10:50:31 PM Logger.MyLogger log
+INFO: Recieved Registration Request
+Mar 02, 2022 10:50:31 PM Logger.MyLogger log
+INFO: Registered user sheila
+Mar 02, 2022 10:50:31 PM Logger.MyLogger log
+INFO: Recieved Event Request
+Mar 02, 2022 10:50:31 PM Logger.MyLogger log
+INFO: Retrieved all Event objects for user with authToken sheila1646286631662
+Mar 02, 2022 10:50:31 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 10:50:31 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 10:50:31 PM Logger.MyLogger log
+INFO: Recieved Registration Request
+Mar 02, 2022 10:50:31 PM Logger.MyLogger log
+INFO: Registered user sheila
+Mar 02, 2022 10:50:31 PM Logger.MyLogger log
+INFO: Recieved Person Request
+Mar 02, 2022 10:50:31 PM Logger.MyLogger log
+INFO: Retrieved Person object with ID SheilaParker631690 for user with authToken sheila1646286631886
+Mar 02, 2022 10:50:31 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 10:50:31 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 10:50:31 PM Logger.MyLogger log
+INFO: Recieved Registration Request
+Mar 02, 2022 10:50:32 PM Logger.MyLogger log
+INFO: Registered user sheila
+Mar 02, 2022 10:50:32 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 10:50:32 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 10:50:32 PM Logger.MyLogger log
+INFO: Recieved File Request
+Mar 02, 2022 10:50:32 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 10:50:32 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 10:50:32 PM Logger.MyLogger log
+INFO: Recieved File Request
+Mar 02, 2022 10:50:32 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 10:50:32 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 10:50:32 PM Logger.MyLogger log
+INFO: Recieved Registration Request
+Mar 02, 2022 10:50:32 PM Logger.MyLogger log
+INFO: Registered user sheila
+Mar 02, 2022 10:50:32 PM Logger.MyLogger log
+INFO: Recieved Person Request
+Mar 02, 2022 10:50:32 PM Logger.MyLogger log
+INFO: Got DataAccessError: Error: Incorrect Auth Token
+Mar 02, 2022 10:50:32 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 10:50:32 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 10:50:32 PM Logger.MyLogger log
+INFO: Recieved Load Request
+Mar 02, 2022 10:50:32 PM Logger.MyLogger log
+INFO: Loaded data into database successfully
+Mar 02, 2022 10:50:32 PM Logger.MyLogger log
+INFO: Recieved Fill Request
+Mar 02, 2022 10:50:32 PM Logger.MyLogger log
+INFO: Filled database for user sheila
+Mar 02, 2022 10:50:32 PM Logger.MyLogger log
+INFO: Recieved Login Request
+Mar 02, 2022 10:50:32 PM Logger.MyLogger log
+INFO: Logged in user patrick
+Mar 02, 2022 10:50:32 PM Logger.MyLogger log
+INFO: Recieved Person Request
+Mar 02, 2022 10:50:32 PM Logger.MyLogger log
+INFO: Retrieved all Person objects for user with authToken patrick1646286632509
+Mar 02, 2022 10:50:32 PM Logger.MyLogger log
+INFO: Recieved Event Request
+Mar 02, 2022 10:50:32 PM Logger.MyLogger log
+INFO: Retrieved all Event objects for user with authToken patrick1646286632509
+Mar 02, 2022 10:50:32 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 10:50:32 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 10:50:32 PM Logger.MyLogger log
+INFO: Recieved Registration Request
+Mar 02, 2022 10:50:32 PM Logger.MyLogger log
+INFO: Registered user sheila
+Mar 02, 2022 10:50:32 PM Logger.MyLogger log
+INFO: Recieved Login Request
+Mar 02, 2022 10:50:32 PM Logger.MyLogger log
+INFO: Logged in user sheila
+Mar 02, 2022 10:59:10 PM Logger.MyLogger log
+INFO: Initializing Server
+Mar 02, 2022 10:59:10 PM Logger.MyLogger log
+INFO: Server Started
+Mar 02, 2022 11:00:18 PM Logger.MyLogger log
+INFO: Initializing Server
+Mar 02, 2022 11:00:18 PM Logger.MyLogger log
+INFO: Server Started
+Mar 02, 2022 11:01:14 PM Logger.MyLogger log
+INFO: Initializing Server
+Mar 02, 2022 11:01:14 PM Logger.MyLogger log
+INFO: Server Started
+Mar 02, 2022 11:01:36 PM Logger.MyLogger log
+INFO: Initializing Server
+Mar 02, 2022 11:01:37 PM Logger.MyLogger log
+INFO: Server Started
+Mar 02, 2022 11:01:56 PM Logger.MyLogger log
+INFO: Initializing Server
+Mar 02, 2022 11:01:56 PM Logger.MyLogger log
+INFO: Server Started
+Mar 02, 2022 11:02:28 PM Logger.MyLogger log
+INFO: Authtoken error: [SQLITE_CONSTRAINT_UNIQUE]  A UNIQUE constraint failed (UNIQUE constraint failed: Authtoken.authtoken)
+Mar 02, 2022 11:03:27 PM Logger.MyLogger log
+INFO: Initializing Server
+Mar 02, 2022 11:03:28 PM Logger.MyLogger log
+INFO: Server Started
+Mar 02, 2022 11:05:36 PM Logger.MyLogger log
+INFO: Initializing Server
+Mar 02, 2022 11:05:36 PM Logger.MyLogger log
+INFO: Server Started
+Mar 02, 2022 11:06:14 PM Logger.MyLogger log
+INFO: Authtoken error: [SQLITE_CONSTRAINT_UNIQUE]  A UNIQUE constraint failed (UNIQUE constraint failed: Authtoken.authtoken)
+Mar 02, 2022 11:06:25 PM Logger.MyLogger log
+INFO: Initializing Server
+Mar 02, 2022 11:06:25 PM Logger.MyLogger log
+INFO: Server Started
+Mar 02, 2022 11:06:28 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 11:06:28 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 11:06:28 PM Logger.MyLogger log
+INFO: Recieved Load Request
+Mar 02, 2022 11:06:28 PM Logger.MyLogger log
+INFO: Loaded data into database successfully
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Recieved Login Request
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Logged in user sheila
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Recieved Event Request
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Retrieved all Event objects for user with authToken sheila1646287590053
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Recieved Person Request
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Retrieved all Person objects for user with authToken sheila1646287590053
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Recieved Login Request
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Logged in user patrick
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Recieved Event Request
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Retrieved all Event objects for user with authToken patrick1646287590107
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Recieved Person Request
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Retrieved all Person objects for user with authToken patrick1646287590107
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Recieved File Request
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Recieved Registration Request
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Registered user sheila
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Recieved Person Request
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Retrieved all Person objects for user with authToken sheila1646287590518
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Recieved Event Request
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Retrieved all Event objects for user with authToken sheila1646287590518
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Recieved Registration Request
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Registered user sheila
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Recieved Login Request
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Got DataAccessError: Failed to login: No user found with given credentials
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Recieved Load Request
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Loaded data into database successfully
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Recieved Login Request
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Logged in user sheila
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Recieved Event Request
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Retrieved all Event objects for user with authToken sheila1646287590858
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Recieved Person Request
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Retrieved all Person objects for user with authToken sheila1646287590858
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Recieved Login Request
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Logged in user patrick
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Recieved Event Request
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Retrieved all Event objects for user with authToken patrick1646287590898
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Recieved Person Request
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Retrieved all Person objects for user with authToken patrick1646287590898
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 11:06:30 PM Logger.MyLogger log
+INFO: Recieved Registration Request
+Mar 02, 2022 11:06:31 PM Logger.MyLogger log
+INFO: Registered user sheila
+Mar 02, 2022 11:06:31 PM Logger.MyLogger log
+INFO: Recieved Person Request
+Mar 02, 2022 11:06:31 PM Logger.MyLogger log
+INFO: Retrieved all Person objects for user with authToken sheila1646287591212
+Mar 02, 2022 11:06:31 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 11:06:31 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 11:06:31 PM Logger.MyLogger log
+INFO: Recieved Registration Request
+Mar 02, 2022 11:06:31 PM Logger.MyLogger log
+INFO: Registered user sheila
+Mar 02, 2022 11:06:31 PM Logger.MyLogger log
+INFO: Recieved Login Request
+Mar 02, 2022 11:06:31 PM Logger.MyLogger log
+INFO: Got DataAccessError: Failed to login: No user found with given credentials
+Mar 02, 2022 11:06:31 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 11:06:31 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 11:06:31 PM Logger.MyLogger log
+INFO: Recieved Registration Request
+Mar 02, 2022 11:06:31 PM Logger.MyLogger log
+INFO: Registered user sheila
+Mar 02, 2022 11:06:31 PM Logger.MyLogger log
+INFO: Recieved Event Request
+Mar 02, 2022 11:06:31 PM Logger.MyLogger log
+INFO: Got DataAccessError: Error: Incorrect Auth Token
+Mar 02, 2022 11:06:31 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 11:06:31 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 11:06:31 PM Logger.MyLogger log
+INFO: Recieved Load Request
+Mar 02, 2022 11:06:31 PM Logger.MyLogger log
+INFO: Loaded data into database successfully
+Mar 02, 2022 11:06:31 PM Logger.MyLogger log
+INFO: Recieved Login Request
+Mar 02, 2022 11:06:31 PM Logger.MyLogger log
+INFO: Logged in user sheila
+Mar 02, 2022 11:06:31 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 11:06:31 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 11:06:31 PM Logger.MyLogger log
+INFO: Recieved Login Request
+Mar 02, 2022 11:06:31 PM Logger.MyLogger log
+INFO: Got DataAccessError: Failed to login: No user found with given credentials
+Mar 02, 2022 11:06:31 PM Logger.MyLogger log
+INFO: Recieved Login Request
+Mar 02, 2022 11:06:31 PM Logger.MyLogger log
+INFO: Got DataAccessError: Failed to login: No user found with given credentials
+Mar 02, 2022 11:06:31 PM Logger.MyLogger log
+INFO: Recieved Person Request
+Mar 02, 2022 11:06:31 PM Logger.MyLogger log
+INFO: Got DataAccessError: Error: Incorrect Auth Token
+Mar 02, 2022 11:06:31 PM Logger.MyLogger log
+INFO: Recieved Event Request
+Mar 02, 2022 11:06:31 PM Logger.MyLogger log
+INFO: Got DataAccessError: Error: Incorrect Auth Token
+Mar 02, 2022 11:06:31 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 11:06:31 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 11:06:31 PM Logger.MyLogger log
+INFO: Recieved Load Request
+Mar 02, 2022 11:06:31 PM Logger.MyLogger log
+INFO: Loaded data into database successfully
+Mar 02, 2022 11:06:31 PM Logger.MyLogger log
+INFO: Recieved Event Request
+Mar 02, 2022 11:06:31 PM Logger.MyLogger log
+INFO: Got DataAccessError: Error: Incorrect Auth Token
+Mar 02, 2022 11:06:31 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 11:06:31 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 11:06:31 PM Logger.MyLogger log
+INFO: Recieved Registration Request
+Mar 02, 2022 11:06:32 PM Logger.MyLogger log
+INFO: Registered user sheila
+Mar 02, 2022 11:06:32 PM Logger.MyLogger log
+INFO: Recieved Person Request
+Mar 02, 2022 11:06:32 PM Logger.MyLogger log
+INFO: Retrieved all Person objects for user with authToken sheila1646287592075
+Mar 02, 2022 11:06:32 PM Logger.MyLogger log
+INFO: Recieved Event Request
+Mar 02, 2022 11:06:32 PM Logger.MyLogger log
+INFO: Retrieved all Event objects for user with authToken sheila1646287592075
+Mar 02, 2022 11:06:32 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 11:06:32 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 11:06:32 PM Logger.MyLogger log
+INFO: Recieved Load Request
+Mar 02, 2022 11:06:32 PM Logger.MyLogger log
+INFO: Loaded data into database successfully
+Mar 02, 2022 11:06:32 PM Logger.MyLogger log
+INFO: Recieved Login Request
+Mar 02, 2022 11:06:32 PM Logger.MyLogger log
+INFO: Logged in user sheila
+Mar 02, 2022 11:06:32 PM Logger.MyLogger log
+INFO: Recieved Person Request
+Mar 02, 2022 11:06:32 PM Logger.MyLogger log
+INFO: Got DataAccessError: No person found for given PersonID and AuthToken
+Mar 02, 2022 11:06:32 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 11:06:32 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 11:06:32 PM Logger.MyLogger log
+INFO: Recieved Registration Request
+Mar 02, 2022 11:06:32 PM Logger.MyLogger log
+INFO: Registered user sheila
+Mar 02, 2022 11:06:32 PM Logger.MyLogger log
+INFO: Recieved Person Request
+Mar 02, 2022 11:06:32 PM Logger.MyLogger log
+INFO: Got DataAccessError: Error: Incorrect Auth Token
+Mar 02, 2022 11:06:32 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 11:06:32 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 11:06:32 PM Logger.MyLogger log
+INFO: Recieved Load Request
+Mar 02, 2022 11:06:32 PM Logger.MyLogger log
+INFO: Loaded data into database successfully
+Mar 02, 2022 11:06:32 PM Logger.MyLogger log
+INFO: Recieved Login Request
+Mar 02, 2022 11:06:32 PM Logger.MyLogger log
+INFO: Logged in user sheila
+Mar 02, 2022 11:06:32 PM Logger.MyLogger log
+INFO: Recieved Event Request
+Mar 02, 2022 11:06:32 PM Logger.MyLogger log
+INFO: Retrieved Person object with ID Sheila_Asteroids for user with authToken sheila1646287592394
+Mar 02, 2022 11:06:32 PM Logger.MyLogger log
+INFO: Recieved Event Request
+Mar 02, 2022 11:06:32 PM Logger.MyLogger log
+INFO: Retrieved Person object with ID Other_Asteroids for user with authToken sheila1646287592394
+Mar 02, 2022 11:06:32 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 11:06:32 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 11:06:32 PM Logger.MyLogger log
+INFO: Recieved Registration Request
+Mar 02, 2022 11:06:32 PM Logger.MyLogger log
+INFO: Registered user sheila
+Mar 02, 2022 11:06:32 PM Logger.MyLogger log
+INFO: Recieved Fill Request
+Mar 02, 2022 11:06:32 PM Logger.MyLogger log
+INFO: Filled database for user sheila
+Mar 02, 2022 11:06:32 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 11:06:32 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 11:06:32 PM Logger.MyLogger log
+INFO: Recieved Registration Request
+Mar 02, 2022 11:06:32 PM Logger.MyLogger log
+INFO: Registered user sheila
+Mar 02, 2022 11:06:32 PM Logger.MyLogger log
+INFO: Recieved Fill Request
+Mar 02, 2022 11:06:32 PM Logger.MyLogger log
+INFO: Filled database for user sheila
+Mar 02, 2022 11:06:32 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 11:06:32 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 11:06:32 PM Logger.MyLogger log
+INFO: Recieved Registration Request
+Mar 02, 2022 11:06:33 PM Logger.MyLogger log
+INFO: Registered user sheila
+Mar 02, 2022 11:06:33 PM Logger.MyLogger log
+INFO: Recieved Fill Request
+Mar 02, 2022 11:06:33 PM Logger.MyLogger log
+INFO: Filled database for user sheila
+Mar 02, 2022 11:06:33 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 11:06:33 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 11:06:33 PM Logger.MyLogger log
+INFO: Recieved Registration Request
+Mar 02, 2022 11:06:33 PM Logger.MyLogger log
+INFO: Registered user sheila
+Mar 02, 2022 11:06:33 PM Logger.MyLogger log
+INFO: Recieved Person Request
+Mar 02, 2022 11:06:33 PM Logger.MyLogger log
+INFO: Retrieved all Person objects for user with authToken sheila1646287593569
+Mar 02, 2022 11:06:33 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 11:06:33 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 11:06:33 PM Logger.MyLogger log
+INFO: Recieved Registration Request
+Mar 02, 2022 11:06:33 PM Logger.MyLogger log
+INFO: Registered user sheila
+Mar 02, 2022 11:06:33 PM Logger.MyLogger log
+INFO: Recieved Load Request
+Mar 02, 2022 11:06:33 PM Logger.MyLogger log
+INFO: Loaded data into database successfully
+Mar 02, 2022 11:06:33 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 11:06:33 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 11:06:33 PM Logger.MyLogger log
+INFO: Recieved Registration Request
+Mar 02, 2022 11:06:33 PM Logger.MyLogger log
+INFO: Registered user sheila
+Mar 02, 2022 11:06:33 PM Logger.MyLogger log
+INFO: Recieved Registration Request
+Mar 02, 2022 11:06:33 PM Logger.MyLogger log
+INFO: Failed to register user already in database: null
+Mar 02, 2022 11:06:33 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 11:06:34 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 11:06:34 PM Logger.MyLogger log
+INFO: Recieved Load Request
+Mar 02, 2022 11:06:34 PM Logger.MyLogger log
+INFO: Loaded data into database successfully
+Mar 02, 2022 11:06:34 PM Logger.MyLogger log
+INFO: Recieved Login Request
+Mar 02, 2022 11:06:34 PM Logger.MyLogger log
+INFO: Logged in user patrick
+Mar 02, 2022 11:06:34 PM Logger.MyLogger log
+INFO: Recieved Event Request
+Mar 02, 2022 11:06:34 PM Logger.MyLogger log
+INFO: Got DataAccessError: No event found for this eventID and authToken username
+Mar 02, 2022 11:06:34 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 11:06:34 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 11:06:34 PM Logger.MyLogger log
+INFO: Recieved Registration Request
+Mar 02, 2022 11:06:34 PM Logger.MyLogger log
+INFO: Registered user sheila
+Mar 02, 2022 11:06:34 PM Logger.MyLogger log
+INFO: Recieved Person Request
+Mar 02, 2022 11:06:34 PM Logger.MyLogger log
+INFO: Retrieved all Person objects for user with authToken sheila1646287594247
+Mar 02, 2022 11:06:34 PM Logger.MyLogger log
+INFO: Recieved Event Request
+Mar 02, 2022 11:06:34 PM Logger.MyLogger log
+INFO: Retrieved all Event objects for user with authToken sheila1646287594247
+Mar 02, 2022 11:06:34 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 11:06:34 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 11:06:34 PM Logger.MyLogger log
+INFO: Recieved Registration Request
+Mar 02, 2022 11:06:34 PM Logger.MyLogger log
+INFO: Registered user sheila
+Mar 02, 2022 11:06:34 PM Logger.MyLogger log
+INFO: Recieved Event Request
+Mar 02, 2022 11:06:34 PM Logger.MyLogger log
+INFO: Retrieved all Event objects for user with authToken sheila1646287594489
+Mar 02, 2022 11:06:34 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 11:06:34 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 11:06:34 PM Logger.MyLogger log
+INFO: Recieved Registration Request
+Mar 02, 2022 11:06:34 PM Logger.MyLogger log
+INFO: Registered user sheila
+Mar 02, 2022 11:06:34 PM Logger.MyLogger log
+INFO: Recieved Person Request
+Mar 02, 2022 11:06:34 PM Logger.MyLogger log
+INFO: Retrieved Person object with ID SheilaParker594517 for user with authToken sheila1646287594716
+Mar 02, 2022 11:06:34 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 11:06:34 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 11:06:34 PM Logger.MyLogger log
+INFO: Recieved Registration Request
+Mar 02, 2022 11:06:34 PM Logger.MyLogger log
+INFO: Registered user sheila
+Mar 02, 2022 11:06:34 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 11:06:34 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 11:06:34 PM Logger.MyLogger log
+INFO: Recieved File Request
+Mar 02, 2022 11:06:34 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 11:06:34 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 11:06:34 PM Logger.MyLogger log
+INFO: Recieved File Request
+Mar 02, 2022 11:06:34 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 11:06:34 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 11:06:34 PM Logger.MyLogger log
+INFO: Recieved Registration Request
+Mar 02, 2022 11:06:35 PM Logger.MyLogger log
+INFO: Registered user sheila
+Mar 02, 2022 11:06:35 PM Logger.MyLogger log
+INFO: Recieved Person Request
+Mar 02, 2022 11:06:35 PM Logger.MyLogger log
+INFO: Got DataAccessError: Error: Incorrect Auth Token
+Mar 02, 2022 11:06:35 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 11:06:35 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 11:06:35 PM Logger.MyLogger log
+INFO: Recieved Load Request
+Mar 02, 2022 11:06:35 PM Logger.MyLogger log
+INFO: Loaded data into database successfully
+Mar 02, 2022 11:06:35 PM Logger.MyLogger log
+INFO: Recieved Fill Request
+Mar 02, 2022 11:06:35 PM Logger.MyLogger log
+INFO: Filled database for user sheila
+Mar 02, 2022 11:06:35 PM Logger.MyLogger log
+INFO: Recieved Login Request
+Mar 02, 2022 11:06:35 PM Logger.MyLogger log
+INFO: Logged in user patrick
+Mar 02, 2022 11:06:35 PM Logger.MyLogger log
+INFO: Recieved Person Request
+Mar 02, 2022 11:06:35 PM Logger.MyLogger log
+INFO: Retrieved all Person objects for user with authToken patrick1646287595450
+Mar 02, 2022 11:06:35 PM Logger.MyLogger log
+INFO: Recieved Event Request
+Mar 02, 2022 11:06:35 PM Logger.MyLogger log
+INFO: Retrieved all Event objects for user with authToken patrick1646287595450
+Mar 02, 2022 11:06:35 PM Logger.MyLogger log
+INFO: Recieved Clear Database Request
+Mar 02, 2022 11:06:35 PM Logger.MyLogger log
+INFO: Cleared database
+Mar 02, 2022 11:06:35 PM Logger.MyLogger log
+INFO: Recieved Registration Request
+Mar 02, 2022 11:06:35 PM Logger.MyLogger log
+INFO: Registered user sheila
+Mar 02, 2022 11:06:35 PM Logger.MyLogger log
+INFO: Recieved Login Request
+Mar 02, 2022 11:06:35 PM Logger.MyLogger log
+INFO: Logged in user sheila

@@ -62,6 +62,9 @@ public class TreeGeneration {
         FullPerson mother = null;
         FullPerson father = null;
         int personBirthYear = generateBirthYear(gender, childBirthYear);
+        /*
+        Recursively add parents
+         */
         if (generations > 1) {
             mother = generatePerson(FEMALE, generations -1, username, personBirthYear, conn);
             father = generatePerson(MALE, generations -1, username, personBirthYear, conn);
@@ -72,7 +75,9 @@ public class TreeGeneration {
             addMarriageEventInDatabase(personBirthYear, mother, father, username, conn);
         }
 
-        //make details of current person
+        /*
+        Make details of the person being made
+         */
         int personDeathYear = generateDeathYear(childBirthYear, personBirthYear);
         String personFirstName = getRandomFirstName(gender);
         String personLastName = getRandomLastName();
@@ -209,14 +214,13 @@ public class TreeGeneration {
     }
 
     private Event getNewEventObject(String eventType, String username, String personID, int year) {
+        //Turns data into an event object
         String newEventID = getNewEventID(eventType, personID);
         Location newLocation = getNewLocation();
 
-        Event newEvent = new Event(newEventID, username, personID,
+        return new Event(newEventID, username, personID,
                 newLocation.getLatitude(), newLocation.getLongitude(),
                 newLocation.getCountry(), newLocation.getCity(), eventType, year);
-
-        return newEvent;
     }
 
     private String getRandomFirstName(Genders gender) {

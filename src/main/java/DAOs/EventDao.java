@@ -1,5 +1,6 @@
 package DAOs;
 
+import DAOs.HelperClasses.AuthFromUsername;
 import Models.Event;
 import MyExceptions.DataAccessException;
 import MyExceptions.InvalidAuthTokenException;
@@ -33,17 +34,15 @@ public class EventDao {
      * @throws DataAccessException If error encountered when inserting into the db
      */
     public void insert(Event event) throws DataAccessException {
-        //We can structure our string to be similar to a sql command, but if we insert question
-        //marks we can change them later with help from the statement
+        //SQL command to enter the event object into the database
         String sql = "INSERT INTO Events (eventID, associatedUsername, personID, latitude, longitude, " +
                 "country, city, eventType, year) VALUES(?,?,?,?,?,?,?,?,?)";
+        //Make sure we have all the necessary values
         if (event == null || event.getEventID() == null || event.getAssociatedUsername() == null || event.getPersonID() == null ||event.getCountry() == null ||event.getCity() == null ||event.getEventType() == null ) {
             throw new DataAccessException("Null or Incomplete data given");
         }
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            //Using the statements built-in set(type) functions we can pick the question mark we want
-            //to fill in and give it a proper value. The first argument corresponds to the first
-            //question mark found in our sql String
+            //Replacing question marks with actual data
             stmt.setString(1, event.getEventID());
             stmt.setString(2, event.getAssociatedUsername());
             stmt.setString(3, event.getPersonID());
@@ -70,121 +69,77 @@ public class EventDao {
      * @throws InvalidAuthTokenException if the authentication token doesn't exist in the database.
      */
     public ArrayList<Event> getEvents(String authToken, String eventID) throws DataAccessException {
-
         ArrayList<Event> events = new ArrayList<>();
+        //Get the username from the authToken table
+        AuthFromUsername afu = new AuthFromUsername();
+        String currUser = afu.getUsernameFromAuthToken(authToken,conn);
+        //Case 1: Looking for specific Event
+        if (eventID != null && authToken != null) {
+            events = getEventsWithUsername(currUser, eventID, true);
+            return events;
+        //Case 2: Want all the events
+        } else if (authToken != null) {
+            events = getEventsWithUsername(currUser, eventID, false);
+            return events;
+        } else {
+            throw new DataAccessException("No authtoken given");
+        }
+    }
+
+    private ArrayList<Event> getEventsWithUsername(String currUser, String eventID, boolean isSingle) throws DataAccessException{
         ResultSet rs = null;
-        if (eventID != null) {
-
-            String usersql = "SELECT * FROM AuthToken WHERE authtoken = ?;";
-            String sql = "SELECT * FROM Events WHERE eventID = ? AND associatedUsername = ?;";
-            String currUser = new String();
-            // 1. Get the corresponding username for the authtoken
-            try (PreparedStatement stmt = conn.prepareStatement(usersql)) {
-                stmt.setString(1, authToken);
-                rs = stmt.executeQuery();
-                if (rs.next()) {
-                    currUser = rs.getString("username");
-                } else {
-                    throw new DataAccessException("No user found for this authToken");
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-                throw new DataAccessException("Error encountered when trying to find a user for the authtoken");
-            } finally {
-                if(rs != null) {
-                    try {
-                        rs.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                }
+        ArrayList<Event> output = new ArrayList<>();
+        String sql;
+        //Switch SQL statement depending on whether we want one or all Events
+        if (isSingle) {
+            sql = "SELECT * FROM Events WHERE associatedUsername = ? AND eventID = ?;";
+        } else {
+            sql = "SELECT * FROM Events WHERE associatedUsername = ?;";
+        }
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            //Setting data
+            stmt.setString(1, currUser);
+            if (isSingle) {
+                stmt.setString(2, eventID);
             }
-
-            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                stmt.setString(1, eventID);
-                stmt.setString(2,currUser);
-                rs = stmt.executeQuery();
+            rs = stmt.executeQuery();
+            //Dealing with just one event requested
+            if (isSingle) {
                 if (rs.next()) {
-                    events.add(new Event(rs.getString("eventID"), rs.getString("associatedUsername"),
+                    output.add(new Event(rs.getString("eventID"), rs.getString("associatedUsername"),
                             rs.getString("personID"), rs.getFloat("latitude"), rs.getFloat("longitude"),
                             rs.getString("country"), rs.getString("city"), rs.getString("eventType"),
                             rs.getInt("year")));
-                    return events;
+                    return output;
                 } else {
                     throw new DataAccessException("No event found for this eventID and authToken username");
                 }
-            } catch (SQLException e) {
-                e.printStackTrace();
-                throw new DataAccessException("Error encountered while finding event");
-            } finally {
-                if(rs != null) {
-                    try {
-                        rs.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            }
-        } else if (authToken != null) {
-            
-            String usersql = "SELECT * FROM AuthToken WHERE authtoken = ?;";
-            String sql = "SELECT * FROM Events WHERE associatedUsername = ?;";
-            String currUser = new String();
-            // 1. Get the corresponding username for the authtoken
-            try (PreparedStatement stmt = conn.prepareStatement(usersql)) {
-                stmt.setString(1, authToken);
-                rs = stmt.executeQuery();
-                if (rs.next()) {
-                    currUser = rs.getString("username");
-                }else {
-                    throw new DataAccessException("No user found for this authToken");
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-                throw new DataAccessException("Error encountered when trying to find a user for the authtoken");
-            } finally {
-                if(rs != null) {
-                    try {
-                        rs.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-            //2. Get all the events for the user
-            rs = null;
-            
-            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                stmt.setString(1, currUser);
-                rs = stmt.executeQuery();
+            //dealing with all events requested
+            } else {
                 while (rs.next()) {
-                    events.add(new Event(rs.getString("eventID"), rs.getString("associatedUsername"),
+                    output.add(new Event(rs.getString("eventID"), rs.getString("associatedUsername"),
                             rs.getString("personID"), rs.getFloat("latitude"), rs.getFloat("longitude"),
                             rs.getString("country"), rs.getString("city"), rs.getString("eventType"),
                             rs.getInt("year")));
                 }
-                if (!events.isEmpty()) {
-                    return events;
+                if (!output.isEmpty()) {
+                    return output;
                 } else {
                     throw new DataAccessException("No events found for this authToken username");
                 }
-            } catch (SQLException e) {
-                e.printStackTrace();
-                throw new DataAccessException("Error encountered while finding event");
-            } finally {
-                if(rs != null) {
-                    try {
-                        rs.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DataAccessException("Error encountered while finding event");
+        } finally {
+            if(rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
-
             }
         }
-        return null;
     }
-
 
 }
