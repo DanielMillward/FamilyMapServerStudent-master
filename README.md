@@ -1,7 +1,8 @@
-s# FamilyMapServerStudent
+# FamilyMap Server - CS 240 Project
 
-- Refer to the <b>How To Get Started</b> document on the <b>Family Map Server Program Assignment</b> for more detailed instructions and help with common issues. 
+This is the backend part of a Family Map application developed for the CS 240 class at BYU. It follows [this 13 page specification](https://students.cs.byu.edu/~cs240ta/fall2018/projects/family-map-server/FamilyMapServerSpecification.pdf). In summary, it handles a CRUD API for dealing with family members and the location of important life events. The code is fully tested as specified. Look at my list of repos to find the client side, also written in Java!
 
+## Original instructions
 General Instructions:
 1.	Follow the instructions on github regarding how to clone this repository into a directory on your local machine.
 2.	Open IntelliJ.
